@@ -29,6 +29,7 @@ void menu_disciplines() {
 	cin >> a;
 	if (a == 0) {
 		return;
+
 	}
 
 	if (a == 1) {
