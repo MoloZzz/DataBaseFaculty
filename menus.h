@@ -112,6 +112,7 @@ void menu_students() {
 	IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt");
 
 	string s;
+	int wait;
 	getline(IFfile, s);
 	const int a1 = 30;
 	const int count = atoi(s.c_str());
@@ -132,20 +133,59 @@ void menu_students() {
 	}
 
 	if (a == 1) {
-		
-		cout << "This list has entries: " << count << endl;
 
-		student newStudent[a1];
+		cout << "This list has entries: " << count << endl;
 		for (int i = 0; i < count; i++) {
 			newStudent[i].print();
+			
 		}
-		int b = _getch();
-		
+		wait = _getch();
+	}
 		if (a == 2) {
+			fstream Ffile;
+			Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt",ios_base::app);
+			
+			cout << "Enter Student ID" << endl;
+			int student_ID;
+			tryAgain:
+			cin>> student_ID;
+			if (student_ID > 0 && student_ID < 9999) {
+				Ffile << student_ID;
+				Ffile << "\n";
+			}
+			else {
+				cout << "wrong ID, try again" << endl;
+				goto tryAgain;
+			}
+			cout << "Enter Student name(only name,without surname) " << endl;
+			string student_name;
+			tryAgain1:
+			cin >> student_name;
+			if (student_name.size() < 3) {
+				cout << "name so short,try again" << endl;
+				goto tryAgain1;
+			}
+			else {
+				Ffile << student_name;
+				Ffile << " ";
+			}
+			cout << "Enter Student surname(only name,without name) " << endl;
+			string student_surname;
+		tryAgain2:
+			cin >> student_surname;
+			if (student_surname.size() < 3) {
+				cout << "surname so short,try again" << endl;
+				goto tryAgain2;
+			}
+			else {
+				Ffile << student_surname;
+				Ffile << "\n";
+			}
 			
 
 
         }
+
 		if (a == 3) {
 			cout << "enter index: " << endl;
 			int index;
@@ -157,12 +197,12 @@ void menu_students() {
 			else {
 				cout << "index more then all students count" << endl;
 			}
-
-
+			wait = _getch();
+			
 		}
 		menu_students();
 	}
-}
+
 
 void menu_teachers() {
 	
