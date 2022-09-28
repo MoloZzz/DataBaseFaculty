@@ -1,14 +1,15 @@
 ﻿#include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
+#include"Structures.h"
+#include"WorkWithFile.h"
 
 
 
 
 int main() {
 
-
+	menu();
 
 
 
