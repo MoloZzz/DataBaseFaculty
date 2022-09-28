@@ -5,6 +5,7 @@
 #include <conio.h>
 #include <string>
 #include"Structures.h"
+#include"menus.h"
 
 
 #define ESC 27
@@ -34,15 +35,15 @@ void ConsoleCursorVisible(bool show, short size)
 
 
 
-void menu() {
-    int data = 0;
 
+
+void menu() {
 
     SetConsoleTitle(L"NLS");
     system("CLS");
     setlocale(0, "RU");
     ConsoleCursorVisible(false, 100);
-    string T[] = {"Start","Exit"};
+    string T[] = {"Actions with students","Actions with disciplines","Actions with teachers","Actions with groups","Exit"};
 
     char aT = 0;
     char c;
@@ -81,12 +82,42 @@ void menu() {
                 system("CLS");
                 d(x, y);
                 SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-                cout << "Start" << endl;
-                Sleep(1500);
+                menu_students();
+             
                 system("CLS");
                 break;
             }
             case 1:
+            {
+                system("CLS");
+                d(x, y);
+                SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+                menu_disciplines();
+       
+                system("CLS");
+                break;
+            }
+            case 2:
+            {
+                system("CLS");
+                d(x, y);
+                SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+                menu_teachers();
+                
+                system("CLS");
+                break;
+            }
+            case 3:
+            {
+                system("CLS");
+                d(x, y);
+                SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+                menu_groups();
+
+                system("CLS");
+                break;
+            }
+            case 4:
             {
                 exit(0);
                 break;
