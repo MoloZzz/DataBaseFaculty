@@ -39,11 +39,11 @@ void ConsoleCursorVisible(bool show, short size)
 
 void menu() {
 
-    SetConsoleTitle(L"NLS");
+    SetConsoleTitle(L"Faculty Data Base");
     system("CLS");
     setlocale(0, "RU");
     ConsoleCursorVisible(false, 100);
-    string T[] = {"Actions with students","Actions with disciplines","Actions with teachers","Actions with groups","Exit"};
+    string T[] = {"Actions with students","Actions with disciplines","Actions with teachers","Actions with groups","Actions with works","Exit"};
 
     char aT = 0;
     char c;
@@ -54,8 +54,8 @@ void menu() {
         d(x, y);
         for (char i = 0; i < size(T); i++)
         {
-            if (i == aT) SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-            else SetConsoleTextAttribute(h, FOREGROUND_RED);
+            if (i == aT) SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+            else SetConsoleTextAttribute(h, FOREGROUND_GREEN);
             d(x, y++);
             cout << T[i] << endl;
         }
@@ -81,7 +81,7 @@ void menu() {
             {
                 system("CLS");
                 d(x, y);
-                SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+                SetConsoleTextAttribute(h,FOREGROUND_GREEN | FOREGROUND_INTENSITY);
                 menu_students();
              
                 system("CLS");
@@ -91,7 +91,7 @@ void menu() {
             {
                 system("CLS");
                 d(x, y);
-                SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+                SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
                 menu_disciplines();
        
                 system("CLS");
@@ -101,7 +101,7 @@ void menu() {
             {
                 system("CLS");
                 d(x, y);
-                SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+                SetConsoleTextAttribute(h,FOREGROUND_GREEN | FOREGROUND_INTENSITY);
                 menu_teachers();
                 
                 system("CLS");
@@ -111,13 +111,23 @@ void menu() {
             {
                 system("CLS");
                 d(x, y);
-                SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+                SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
                 menu_groups();
 
                 system("CLS");
                 break;
             }
             case 4:
+            {
+                system("CLS");
+                d(x, y);
+                SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+                menu_works();
+
+                system("CLS");
+                break;
+            }
+            case 5:
             {
                 exit(0);
                 break;
