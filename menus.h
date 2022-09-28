@@ -163,10 +163,11 @@ void menu_students() {
 		if (a == 2) {
 			fstream Ffile;
 			Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt",ios_base::app);
-			
+
 			cout << "Enter Student ID" << endl;
 			int student_ID;
-			tryAgain:
+		tryAgain:
+			student_ID = 0;
 			cin>> student_ID;
 			if (student_ID > 0 && student_ID < 9999) {
 				Ffile << student_ID;
@@ -204,6 +205,55 @@ void menu_students() {
 			}
 			
 
+			cout << "Enter contract " << endl;
+			int contract_number;
+		tryAgain3:
+			cin >> contract_number;
+			if (contract_number < 0 || contract_number > 9999) {
+				cout << "wrong contract number" << endl;
+				goto tryAgain3;
+			}
+			else {
+				Ffile << contract_number;
+				Ffile << "\n";
+			}
+
+			cout << "Enter type of studing " << endl;
+			string studing_type;
+
+			cin >> studing_type;
+			Ffile << studing_type;
+			Ffile << "\n";
+
+			cout << "Enter place raiting" << endl;
+			int place_raiting = 0;
+
+		tryAgain4:
+			cin >> place_raiting;
+			if (place_raiting < 1 || place_raiting > 1000) {
+				cout << "wrong place rating" << endl;
+				goto tryAgain4;
+			}
+			else {
+				Ffile << place_raiting;
+				Ffile << "\n";
+			}
+
+			cout << "Enter group ID " << endl;
+			int ID_Group;
+		tryAgain5:
+			cin >> ID_Group;
+			if (ID_Group < 0 || ID_Group > 10000) {
+				cout << "wrong group ID" << endl;
+				goto tryAgain5;
+			}
+			else {
+				Ffile << ID_Group;
+				Ffile << "\n";
+			}
+			Ffile.close();
+			Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt");
+			Ffile << count + 1;
 
         }
 

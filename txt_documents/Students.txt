@@ -1,4 +1,4 @@
-2
+4
 3001
 Yevchyk Oleksii
 41001
@@ -10,4 +10,22 @@ Zinchenco Ivan
 4275
 full-time education
 19
+2002
+3004
+Dima Koval
+4301
+Full
+7
+2002
+3005
+Sasha Kostuchenko
+4291
+HalfDay
+5
 2001
+3006
+Diana Shostak
+4281
+Full
+1
+2003
