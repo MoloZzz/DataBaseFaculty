@@ -9,6 +9,7 @@ struct date {
 	int year;
 };
 
+
 struct full_name {
 	std::string name;
 	std::string surname;

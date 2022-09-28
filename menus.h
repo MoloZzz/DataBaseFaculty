@@ -9,6 +9,7 @@ ofstream OFfile;
 HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 
+
 void GoToXY(short x, short y)
 {
 	SetConsoleCursorPosition(hStdOut, { x, y });
