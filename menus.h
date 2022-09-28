@@ -225,6 +225,7 @@ void menu_teachers() {
 		string s;
 		getline(IFfile, s);
 		int count = atoi(s.c_str());
+
 		cout << "This list has entries: " << count << endl;
 		Sleep(500);
 	}
