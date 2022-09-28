@@ -6,7 +6,7 @@ using namespace std;
 fstream Ffile;
 ofstream OFfile;
 
-HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE); 
+HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 
 void GoToXY(short x, short y)
@@ -17,7 +17,7 @@ void GoToXY(short x, short y)
 
 
 void menu_disciplines() {
-	
+
 	system("cls");
 	cout << "Disciplines`s actions(enter number):" << endl;
 	cout << "1) print" << endl;
@@ -29,12 +29,11 @@ void menu_disciplines() {
 	cin >> a;
 	if (a == 0) {
 		return;
-
 	}
 
 	if (a == 1) {
 		IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Disciplines.txt");
-		
+
 		string s;
 		getline(IFfile, s);
 		int count = atoi(s.c_str());
@@ -157,127 +156,127 @@ void menu_students() {
 		cout << "This list has entries: " << count << endl;
 		for (int i = 0; i < count; i++) {
 			newStudent[i].print();
-			
+
 		}
 		wait = _getch();
 	}
-		if (a == 2) {
-			fstream Ffile;
-			Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt",ios_base::app);
+	if (a == 2) {
+		fstream Ffile;
+		Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt", ios_base::app);
 
-			cout << "Enter Student ID" << endl;
-			int student_ID;
-		tryAgain:
-			student_ID = 0;
-			cin>> student_ID;
-			if (student_ID > 0 && student_ID < 9999) {
-				Ffile << student_ID;
-				Ffile << "\n";
-			}
-			else {
-				cout << "wrong ID, try again" << endl;
-				goto tryAgain;
-			}
-
-			cout << "Enter Student name(only name,without surname) " << endl;
-			string student_name;
-			tryAgain1:
-			cin >> student_name;
-			if (student_name.size() < 3) {
-				cout << "name so short,try again" << endl;
-				goto tryAgain1;
-			}
-			else {
-				Ffile << student_name;
-				Ffile << " ";
-			}
-
-			cout << "Enter Student surname(only name,without name) " << endl;
-			string student_surname;
-		tryAgain2:
-			cin >> student_surname;
-			if (student_surname.size() < 3) {
-				cout << "surname so short,try again" << endl;
-				goto tryAgain2;
-			}
-			else {
-				Ffile << student_surname;
-				Ffile << "\n";
-			}
-			
-
-			cout << "Enter contract " << endl;
-			int contract_number;
-		tryAgain3:
-			cin >> contract_number;
-			if (contract_number < 0 || contract_number > 9999) {
-				cout << "wrong contract number" << endl;
-				goto tryAgain3;
-			}
-			else {
-				Ffile << contract_number;
-				Ffile << "\n";
-			}
-
-			cout << "Enter type of studing " << endl;
-			string studing_type;
-
-			cin >> studing_type;
-			Ffile << studing_type;
+		cout << "Enter Student ID" << endl;
+		int student_ID;
+	tryAgain:
+		student_ID = 0;
+		cin >> student_ID;
+		if (student_ID > 0 && student_ID < 9999) {
+			Ffile << student_ID;
 			Ffile << "\n";
-
-			cout << "Enter place raiting" << endl;
-			int place_raiting = 0;
-
-		tryAgain4:
-			cin >> place_raiting;
-			if (place_raiting < 1 || place_raiting > 1000) {
-				cout << "wrong place rating" << endl;
-				goto tryAgain4;
-			}
-			else {
-				Ffile << place_raiting;
-				Ffile << "\n";
-			}
-
-			cout << "Enter group ID " << endl;
-			int ID_Group;
-		tryAgain5:
-			cin >> ID_Group;
-			if (ID_Group < 0 || ID_Group > 10000) {
-				cout << "wrong group ID" << endl;
-				goto tryAgain5;
-			}
-			else {
-				Ffile << ID_Group;
-				Ffile << "\n";
-			}
-			Ffile.close();
-			Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt");
-			Ffile << count + 1;
-
-        }
-
-		if (a == 3) {
-			cout << "enter index: " << endl;
-			int index;
-			cin >> index;
-			if (index < count) {
-				newStudent[index].print();
-
-			}
-			else {
-				cout << "index more then all students count" << endl;
-			}
-			wait = _getch();
-			
 		}
-		menu_students();
+		else {
+			cout << "wrong ID, try again" << endl;
+			goto tryAgain;
+		}
+
+		cout << "Enter Student name(only name,without surname) " << endl;
+		string student_name;
+	tryAgain1:
+		cin >> student_name;
+		if (student_name.size() < 3) {
+			cout << "name so short,try again" << endl;
+			goto tryAgain1;
+		}
+		else {
+			Ffile << student_name;
+			Ffile << " ";
+		}
+
+		cout << "Enter Student surname(only name,without name) " << endl;
+		string student_surname;
+	tryAgain2:
+		cin >> student_surname;
+		if (student_surname.size() < 3) {
+			cout << "surname so short,try again" << endl;
+			goto tryAgain2;
+		}
+		else {
+			Ffile << student_surname;
+			Ffile << "\n";
+		}
+
+
+		cout << "Enter contract " << endl;
+		int contract_number;
+	tryAgain3:
+		cin >> contract_number;
+		if (contract_number < 0 || contract_number > 9999) {
+			cout << "wrong contract number" << endl;
+			goto tryAgain3;
+		}
+		else {
+			Ffile << contract_number;
+			Ffile << "\n";
+		}
+
+		cout << "Enter type of studing " << endl;
+		string studing_type;
+
+		cin >> studing_type;
+		Ffile << studing_type;
+		Ffile << "\n";
+
+		cout << "Enter place raiting" << endl;
+		int place_raiting = 0;
+
+	tryAgain4:
+		cin >> place_raiting;
+		if (place_raiting < 1 || place_raiting > 1000) {
+			cout << "wrong place rating" << endl;
+			goto tryAgain4;
+		}
+		else {
+			Ffile << place_raiting;
+			Ffile << "\n";
+		}
+
+		cout << "Enter group ID " << endl;
+		int ID_Group;
+	tryAgain5:
+		cin >> ID_Group;
+		if (ID_Group < 0 || ID_Group > 10000) {
+			cout << "wrong group ID" << endl;
+			goto tryAgain5;
+		}
+		else {
+			Ffile << ID_Group;
+			Ffile << "\n";
+		}
+		Ffile.close();
+		Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt");
+		Ffile << count + 1;
+
 	}
+
+	if (a == 3) {
+		cout << "enter index: " << endl;
+		int index;
+		cin >> index;
+		if (index < count) {
+			newStudent[index].print();
+
+		}
+		else {
+			cout << "index more then all students count" << endl;
+		}
+		wait = _getch();
+
+	}
+	menu_students();
+}
 
 
 void menu_teachers() {
-	
+
 	system("cls");
 	cout << "Teachers`s actions(enter number):" << endl;
 	cout << "1) print all" << endl;

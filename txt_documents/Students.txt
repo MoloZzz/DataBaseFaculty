@@ -10,22 +10,16 @@ Zinchenco Ivan
 4275
 full-time education
 19
+2001
+3005
+Dina Shostak
+4277
+Full
+3
 2002
 3004
 Dima Koval
-4301
+4287
 Full
-7
-2002
-3005
-Sasha Kostuchenko
-4291
-HalfDay
-5
-2001
-3006
-Diana Shostak
-4281
-Full
-1
+12
 2003

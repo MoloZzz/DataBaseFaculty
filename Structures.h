@@ -70,12 +70,15 @@ struct group {
 	std::string name;
 	std::string head_student;
 	int students_amount;
+
 	void print() {
-		std::cout << "Group ID: " << ID_Group << std::endl;
-		std::cout << "Name: " << name << std::endl;
+		std::cout << "ID Group: "<< ID_Group << std::endl;
+		std::cout << "Group name: " << name << std::endl;
 		std::cout << "Head student: " << head_student << std::endl;
 		std::cout << "Students amount: " << students_amount << std::endl;
-	}
+
+}
+
 };
 
 struct work {
