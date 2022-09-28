@@ -55,7 +55,7 @@ void menu_groups() {
 		return;
 	}
 	ifstream IFfile;
-	if (a == 1) {
+	if (a == 1) {	
 		IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Groups.txt");
 		string s;
 		getline(IFfile, s);
@@ -109,7 +109,7 @@ void menu_students() {
 	}
 
 	ifstream IFfile;
-	IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt");
+	IFfile.open("c:\\Users\\rsngn\\Source\\Repos\\DataBaseFaculty\\txt_documents\\Students.txt");
 
 	string s;
 	int wait;
@@ -143,7 +143,7 @@ void menu_students() {
 	}
 		if (a == 2) {
 			fstream Ffile;
-			Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt",ios_base::app);
+			Ffile.open("c:\\Users\\rsngn\\Source\\Repos\\DataBaseFaculty\\txt_documents\\Students.txt",ios_base::app);
 			
 			cout << "Enter Student ID" << endl;
 			int student_ID;
@@ -157,7 +157,8 @@ void menu_students() {
 				cout << "wrong ID, try again" << endl;
 				goto tryAgain;
 			}
-			cout << "Enter Student name(only name,without surname) " << endl;
+
+			cout << "Enter Student name(only name, without surname) " << endl;
 			string student_name;
 			tryAgain1:
 			cin >> student_name;
@@ -169,9 +170,10 @@ void menu_students() {
 				Ffile << student_name;
 				Ffile << " ";
 			}
-			cout << "Enter Student surname(only name,without name) " << endl;
+
+			cout << "Enter Student surname(only surname , without name) " << endl;
 			string student_surname;
-		tryAgain2:
+			tryAgain2:
 			cin >> student_surname;
 			if (student_surname.size() < 3) {
 				cout << "surname so short,try again" << endl;
@@ -181,8 +183,50 @@ void menu_students() {
 				Ffile << student_surname;
 				Ffile << "\n";
 			}
-			
 
+			cout << "Enter contract(between 0 and 9999) " << endl;
+			int contract_number;
+			tryAgain3:
+			cin >> contract_number;
+			if (contract_number < 0 || contract_number > 9999) {
+				cout << "wrong contract number" << endl;
+				goto tryAgain3;
+			}
+			else {
+				Ffile << contract_number;
+				Ffile << "\n";
+			}
+
+			cout << "Enter type studing_type" << endl;
+			string studing_type;	
+			Ffile << studing_type;
+			Ffile << "\n";
+
+			cout << "Enter place raiting(between 1 and 1_000) " << endl;
+			int place_raiting;
+			tryAgain4:
+			cin >> place_raiting;
+			if (place_raiting < 1 || place_raiting > 1000) {
+				cout << "wrong contract number" << endl;
+				goto tryAgain4;
+			}
+			else {
+				Ffile << place_raiting;
+				Ffile << "\n";
+			}
+
+			cout << "Enter group ID(between 0 and 10_000) " << endl;
+			int ID_Group;
+			tryAgain5:
+			cin >> ID_Group;
+			if (ID_Group < 0 || ID_Group > 10000) {
+				cout << "wrong group ID" << endl;
+				goto tryAgain5;
+			}
+			else {
+				Ffile << ID_Group;
+				Ffile << "\n";
+			}
 
         }
 
