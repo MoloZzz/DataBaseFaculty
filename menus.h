@@ -47,6 +47,7 @@ void menu_groups() {
 	cout << "Groups`s actions(enter number):" << endl;
 	cout << "1) print" << endl;
 	cout << "2) add" << endl;
+	cout << "3) print by index" << endl;
 	cout << "0) back" << endl;
 
 	int a = 0;
@@ -55,14 +56,31 @@ void menu_groups() {
 		return;
 	}
 	ifstream IFfile;
-	if (a == 1) {
-		IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Groups.txt");
-		string s;
-		getline(IFfile, s);
-		int count = atoi(s.c_str());
-		cout << "This list has entries: " << count << endl;
+	int wait = 0;
+	IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Groups.txt");
+	group groups[10];
+	string s;
+	getline(IFfile, s);
+	int count = atoi(s.c_str());
 
-		Sleep(500);
+	for (int i = 0; i < count; i++) {
+		getline(IFfile, s);
+		groups[i].ID_Group = atoi(s.c_str());
+		getline(IFfile, s);
+		groups[i].name = s;
+		getline(IFfile, s);
+		groups[i].head_student = s;
+		getline(IFfile, s);
+		groups[i].students_amount = atoi(s.c_str());
+	}
+
+	if (a == 1) {
+		cout << "This list has entries: " << count << endl;
+		for (int i = 0; i < count; i++) {
+			groups[i].print();
+		}
+
+		wait = _getch();
 	}
 
 }
@@ -72,6 +90,7 @@ void menu_works() {
 	cout << "Works`s actions(enter number):" << endl;
 	cout << "1) print" << endl;
 	cout << "2) add" << endl;
+	cout << "3) print by index" << endl;
 	cout << "0) back" << endl;
 
 	int a = 0;
@@ -157,6 +176,7 @@ void menu_students() {
 				cout << "wrong ID, try again" << endl;
 				goto tryAgain;
 			}
+
 			cout << "Enter Student name(only name,without surname) " << endl;
 			string student_name;
 			tryAgain1:
@@ -169,6 +189,7 @@ void menu_students() {
 				Ffile << student_name;
 				Ffile << " ";
 			}
+
 			cout << "Enter Student surname(only name,without name) " << endl;
 			string student_surname;
 		tryAgain2:

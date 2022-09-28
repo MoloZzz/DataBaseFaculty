@@ -68,8 +68,14 @@ struct discipline {
 struct group {
 	ID ID_Group;
 	std::string name;
-	full_name head_student;
+	std::string head_student;
 	int students_amount;
+	void print() {
+		std::cout << "Group ID: " << ID_Group << std::endl;
+		std::cout << "Name: " << name << std::endl;
+		std::cout << "Head student: " << head_student << std::endl;
+		std::cout << "Students amount: " << students_amount << std::endl;
+	}
 };
 
 struct work {
