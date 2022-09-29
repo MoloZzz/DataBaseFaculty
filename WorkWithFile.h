@@ -42,6 +42,8 @@ void menu() {
  
     SetConsoleTitle(L"Faculty Data Base");
     system("CLS");
+    SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
+    cout << "\n \t \t \tGitHub - MoloZzz\t \t\t \t\tOLeksii Yevchyk`s work" << endl;
     setlocale(0, "RU");
     ConsoleCursorVisible(false, 100);
     string T[] = {"Actions with students","Actions with disciplines","Actions with teachers","Actions with groups","Actions with works","Exit"};
