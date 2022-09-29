@@ -39,7 +39,7 @@ void ConsoleCursorVisible(bool show, short size)
 
 
 void menu() {
-
+ 
     SetConsoleTitle(L"Faculty Data Base");
     system("CLS");
     setlocale(0, "RU");
