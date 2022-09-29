@@ -1,0 +1,73 @@
+12
+3001
+Yevchyk Oleksii
+41001
+full-time education
+14
+2001
+3002
+Zinchenco Ivan
+4275
+full-time education
+19
+2001
+3005
+Dina Shostak
+4277
+Full
+3
+2002
+3004
+Dima Koval
+4287
+Full
+12
+2003
+3006
+Ivan Goltvenko
+4276
+Half
+17
+2003
+3009
+Vitaliy Kalina
+4264
+Full
+13
+2004
+3010
+Yana Silvestrova
+4257
+Full
+22
+2001
+3011
+Ivan Zigzag
+4219
+Full
+21
+2004
+3012
+Roman Goncharenko
+4222
+Full
+2
+2002
+3013
+Danylo Himik
+4231
+Full
+5
+2001
+3014
+Grisha Dilov
+4231
+Full
+27
+2002
+3015
+Ivan Filatov
+4256
+Full
+26
+2005

@@ -1,0 +1,388 @@
+#pragma once
+
+#include<iostream>
+
+#include<fstream>
+
+using namespace std;
+
+fstream Ffile;
+ofstream OFfile;
+
+HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+
+
+void GoToXY(short x, short y)
+{
+	SetConsoleCursorPosition(hStdOut, { x, y });
+}
+
+
+
+void menu_disciplines() {
+
+	system("cls");
+	cout << "Disciplines`s actions(enter number):" << endl;
+	cout << "1) print" << endl;
+	cout << "2) add" << endl;
+	cout << "0) back" << endl;
+	ifstream IFfile;
+
+	int a = 0;
+	cin >> a;
+	if (a == 0) {
+		return;
+	}
+
+	if (a == 1) {
+		IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Disciplines.txt");
+
+		string s;
+		getline(IFfile, s);
+		int count = atoi(s.c_str());
+		cout << "This list has entries: " << count << endl;
+		Sleep(500);
+	}
+}
+
+void menu_groups() {
+	system("cls");
+	cout << "Groups`s actions(enter number):" << endl;
+	cout << "1) print" << endl;
+	cout << "2) add" << endl;
+	cout << "3) print by index" << endl;
+	cout << "0) back" << endl;
+
+	int a = 0;
+	cin >> a;
+	if (a == 0) {
+		return;
+	}
+
+	ifstream IFfile;
+	int wait = 0;
+	IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Groups.txt");
+	group groups[10];
+	string s;
+	getline(IFfile, s);
+	int count = atoi(s.c_str());
+
+	for (int i = 0; i < count; i++) {
+		getline(IFfile, s);
+		groups[i].ID_Group = atoi(s.c_str());
+		getline(IFfile, s);
+		groups[i].name = s;
+		getline(IFfile, s);
+		groups[i].head_student = s;
+		getline(IFfile, s);
+		groups[i].students_amount = atoi(s.c_str());
+	}
+
+	if (a == 1) {
+		cout << "This list has entries: " << count << endl;
+		for (int i = 0; i < count; i++) {
+			groups[i].print();
+			cout << endl;
+		}
+
+		wait = _getch();
+	}
+
+	if (a == 2) {
+
+		int massiveStudentsOfGroup[10];
+		int y = 0;
+
+		fstream Ffile;
+		Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Groups.txt", ios_base::app);
+
+
+		int id_group = groups[count - 1].ID_Group + 1;
+
+
+
+		string group_name;
+		cout << "Enter name of new group(without number,example: PI) " << endl;
+		cin >> group_name;
+
+		cout << "Enter number of new group(without name,example: 12) " << endl;
+		int numb;
+		cin >> numb;
+
+		string snumb = to_string(numb);
+		string group_name_numb = group_name + "-" + snumb;
+
+
+
+		cout << "Choose ID of head student of this group(1,2,3....)" << endl;
+
+		ifstream IFfileStudents;
+
+		IFfileStudents.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt");
+
+		const int a12 = 30;
+
+		getline(IFfileStudents, s);
+
+		int count_students = atoi(s.c_str());
+
+		student newStudent[a12];
+		string massive[50];
+
+		for (int i = 0; i < count_students; i++) {
+			getline(IFfileStudents, s);
+			newStudent[i].ID_Student = atoi(s.c_str());
+			getline(IFfileStudents, s);
+			newStudent[i].name = s;
+			getline(IFfileStudents, s);
+			newStudent[i].contract_number = atoi(s.c_str());
+			getline(IFfileStudents, s);
+			newStudent[i].studing_type = s;
+			getline(IFfileStudents, s);
+			newStudent[i].place_raiting = atoi(s.c_str());
+			getline(IFfileStudents, s);
+			newStudent[i].ID_Group = atoi(s.c_str());
+			if (newStudent[i].ID_Group == id_group) {
+				cout << "Student of this group name: " << newStudent[i].name << endl;
+				cout << "His ID: " << newStudent[i].ID_Student << endl;
+				y++;
+				massive[y] == newStudent[i].name;
+			}
+		}
+		int his_id;
+		cin >> his_id;
+
+
+			
+		
+
+	
+		cout << "enter students amount of this group: " << std::endl;
+		int group_amount;
+		cin >> group_amount;
+
+
+		Ffile << id_group << endl;
+
+		Ffile << group_name_numb << endl;
+		string name = massive[his_id];
+		Ffile << name << endl;
+
+		Ffile << group_amount<< endl;
+		Ffile.close();
+		Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Groups.txt");
+		Ffile << count +1;
+	}
+
+}
+
+void menu_works() {
+	system("cls");
+	cout << "Works`s actions(enter number):" << endl;
+	cout << "1) print" << endl;
+	cout << "2) add" << endl;
+	cout << "3) print by index" << endl;
+	cout << "0) back" << endl;
+
+	int a = 0;
+	cin >> a;
+	if (a == 0) {
+		return;
+	}
+	ifstream IFfile;
+	if (a == 1) {
+		IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Works.txt");
+
+		string s;
+		getline(IFfile, s);
+		int count = atoi(s.c_str());
+		cout << "This list has entries: " << count << endl;
+
+		Sleep(500);
+	}
+
+}
+
+
+void menu_students() {
+	system("cls");
+	cout << "Students`s actions(enter number):" << endl;
+	cout << "1) print" << endl;
+	cout << "2) add" << endl;
+	cout << "3) print by index" << endl;
+	cout << "0) back" << endl;
+
+	int a = 0;
+	cin >> a;
+	if (a == 0) {
+		return;
+	}
+
+	ifstream IFfile;
+	IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt");
+
+	string s;
+	int wait;
+	getline(IFfile, s);
+	const int a1 = 30;
+	const int count = atoi(s.c_str());
+	student newStudent[a1];
+	for (int i = 0; i < count; i++) {
+		getline(IFfile, s);
+		newStudent[i].ID_Student = atoi(s.c_str());
+		getline(IFfile, s);
+		newStudent[i].name = s;
+		getline(IFfile, s);
+		newStudent[i].contract_number = atoi(s.c_str());
+		getline(IFfile, s);
+		newStudent[i].studing_type = s;
+		getline(IFfile, s);
+		newStudent[i].place_raiting = atoi(s.c_str());
+		getline(IFfile, s);
+		newStudent[i].ID_Group = atoi(s.c_str());
+	}
+
+	if (a == 1) {
+
+		cout << "This list has entries: " << count << endl;
+		for (int i = 0; i < count; i++) {
+			newStudent[i].print();
+
+		}
+		wait = _getch();
+	}
+	if (a == 2) {
+		fstream Ffile;
+		Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt", ios_base::app);
+
+		int student_ID = newStudent[count-1].ID_Student;
+			Ffile << student_ID+1;
+			Ffile << "\n";
+
+
+		cout << "Enter Student name(only name,without surname) " << endl;
+	tryAgain1:
+		string student_name;
+		cin >> student_name;
+		if (student_name.size() < 3) {
+			cout << "name so short,try again" << endl;
+			goto tryAgain1;
+		}
+		else {
+			Ffile << student_name;
+			Ffile << " ";
+		}
+
+		cout << "Enter Student surname(only name,without name) " << endl;
+	tryAgain2:
+		string student_surname;
+		cin >> student_surname;
+		if (student_surname.size() < 3) {
+			cout << "surname so short,try again" << endl;
+			goto tryAgain2;
+		}
+		else {
+			Ffile << student_surname;
+			Ffile << "\n";
+		}
+
+
+		cout << "Enter contract " << endl;
+	tryAgain3:
+		int contract_number;
+		cin >> contract_number;
+		if (contract_number < 0 || contract_number > 9999) {
+			cout << "wrong contract number" << endl;
+			goto tryAgain3;
+		}
+		else {
+			Ffile << contract_number;
+			Ffile << "\n";
+		}
+
+		cout << "Enter type of studing " << endl;
+		string studing_type;
+
+		cin >> studing_type;
+		Ffile << studing_type;
+		Ffile << "\n";
+
+		cout << "Enter place raiting" << endl;
+	tryAgain4:
+		int place_raiting;
+
+		cin >> place_raiting;
+		if (place_raiting < 1 || place_raiting > 1000) {
+			cout << "wrong place rating" << endl;
+			goto tryAgain4;
+		}
+		else {
+			Ffile << place_raiting;
+			Ffile << "\n";
+		}
+
+		cout << "Enter group ID " << endl;
+	tryAgain5:
+		int ID_Group;
+		cin >> ID_Group;
+		if (ID_Group < 0 || ID_Group > 10000) {
+			cout << "wrong group ID" << endl;
+			goto tryAgain5;
+		}
+		else {
+			Ffile << ID_Group;
+			Ffile << "\n";
+		}
+		Ffile.close();
+		Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt");
+		Ffile << count + 1;
+
+	}
+
+	if (a == 3) {
+		cout << "enter index: " << endl;
+		int index;
+		cin >> index;
+		if (index < count) {
+			newStudent[index].print();
+
+		}
+		else {
+			cout << "index more then all students count" << endl;
+		}
+		wait = _getch();
+
+	}
+
+
+	menu_students();
+}
+
+
+void menu_teachers() {
+
+	system("cls");
+	cout << "Teachers`s actions(enter number):" << endl;
+	cout << "1) print all" << endl;
+	cout << "2) add" << endl;
+	cout << "3) print by index" << endl;
+	cout << "0) back" << endl;
+
+	int a = 0;
+	cin >> a;
+	if (a == 0) {
+		return;
+	}
+	ifstream IFfile;
+	if (a == 1) {
+		IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Teachers.txt");
+
+		string s;
+		getline(IFfile, s);
+		int count = atoi(s.c_str());
+
+		cout << "This list has entries: " << count << endl;
+		Sleep(500);
+	}
+}
