@@ -2,6 +2,7 @@
 
 #include<iostream>
 #include<fstream>
+#include<cstring>
 
 using namespace std;
 
@@ -13,6 +14,7 @@ HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	string file_way_groups = file_way + "Groups.txt";
 	string file_way_disciplines = file_way + "Disciplines.txt";
 	string file_way_works = file_way + "Works.txt";
+
 
 
 
@@ -81,7 +83,7 @@ void menu_groups() {
 	}
 
 	string s;
-	group groups[10];
+	group groups[100];
 
 	getline(IFfile, s);
 	int count = atoi(s.c_str());
@@ -97,6 +99,35 @@ void menu_groups() {
 		groups[i].students_amount = atoi(s.c_str());
 	}
 
+	ifstream IFfileStudents;
+
+	IFfileStudents.open(file_way_students);
+	if (IFfile.is_open() != 1) {
+		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
+		wait = _getch();
+		a == 0;
+		return;
+	}
+	getline(IFfileStudents, s);
+
+	int count_students = atoi(s.c_str());
+
+	student newStudent[300];
+	for (int i = 0; i < count_students; i++) {
+		getline(IFfileStudents, s);
+		newStudent[i].ID_Student = atoi(s.c_str());
+		getline(IFfileStudents, s);
+		newStudent[i].name = s;
+		getline(IFfileStudents, s);
+		newStudent[i].contract_number = atoi(s.c_str());
+		getline(IFfileStudents, s);
+		newStudent[i].studing_type = s;
+		getline(IFfileStudents, s);
+		newStudent[i].place_raiting = atoi(s.c_str());
+		getline(IFfileStudents, s);
+		newStudent[i].ID_Group = atoi(s.c_str());
+	}
+
 	if (a == 1) {
 		cout << "This list has entries: " << count << endl;
 		for (int i = 0; i < count; i++) {
@@ -108,6 +139,16 @@ void menu_groups() {
 	}
 
 	if (a == 2) {
+		
+
+
+
+		int id_group = 2001;
+		string group_name = "void";
+        int numb = 0;
+		string name_head = "void";
+		int group_amount;
+
 
 		fstream Ffile;
 		Ffile.open(file_way_groups, ios_base::app);
@@ -119,60 +160,34 @@ void menu_groups() {
 			return;
 		}
 
-
-		int id_group = 2001;
 		if (count != 0) {
 			id_group = groups[count - 1].ID_Group + 1;
 		}
+		bool check1 = false;
 
-
-
-		string group_name;
 		cout << "Enter name of new group(without number,example: PI) " << endl;
-		cin >> group_name;
-
+		while (!check1) {
+			cin >> group_name;
+			if (group_name.size() > 10) {
+				cout << "Wrong name, name shell be from 1 to 10 symbols,without numbers,try again" << endl;
+			}
+			else {
+				check1 == true;
+			}
+		}
 		cout << "Enter number of new group(without name,example: 12) " << endl;
-		int numb;
-		cin >> numb;
 
+		cin >> numb;
+			
 		string snumb = to_string(numb);
 		string group_name_numb = group_name + "-" + snumb;
 
+        cout << "Choose ID of head student of this group(1,2,3....)" << endl;
 
-		ifstream IFfileStudents;
-
-
-		cout << "Choose ID of head student of this group(1,2,3....)" << endl;
-
-		IFfileStudents.open(file_way_students);
-		if (IFfile.is_open() != 1) {
-			cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
-			wait = _getch();
-			a == 0;
-			return;
-		}
-		getline(IFfileStudents, s);
-
-		int count_students = atoi(s.c_str());
-
-		student newStudent[300];
 		int stud_ids[300] = {};
 		int y = 0;
 
 		for (int i = 0; i < count_students; i++) {
-			getline(IFfileStudents, s);
-			newStudent[i].ID_Student = atoi(s.c_str());
-			getline(IFfileStudents, s);
-			newStudent[i].name = s;
-			getline(IFfileStudents, s);
-			newStudent[i].contract_number = atoi(s.c_str());
-			getline(IFfileStudents, s);
-			newStudent[i].studing_type = s;
-			getline(IFfileStudents, s);
-			newStudent[i].place_raiting = atoi(s.c_str());
-			getline(IFfileStudents, s);
-			newStudent[i].ID_Group = atoi(s.c_str());
-
 			if (newStudent[i].ID_Group == id_group) {
 				cout << y+1 << ") Student of this group name: " << newStudent[i].name << endl;
 				cout << "His ID: " << newStudent[i].ID_Student << endl;
@@ -180,7 +195,7 @@ void menu_groups() {
 				y++;
 			}
 		}
-		string name_head;
+
 		cout << "Enter ID head student of this group" << endl;
 		int entered_id = 0;
 		bool check8 = false;
@@ -203,19 +218,23 @@ void menu_groups() {
 
 			
 		
-
-	
 		cout << "enter students amount of this group: " << std::endl;
-		int group_amount;
-		cin >> group_amount;
-
+		bool check2 = false;
+		while (!check2) {
+			cin >> group_amount;
+			if (group_amount > 3 || group_amount < 50) {
+				check2 = true;
+			}
+			else {
+				cout << "Wrong enter, amount can be from 3 to 50,try again!" << endl;
+			}
+		}
 
 		Ffile << id_group << endl;
-
 		Ffile << group_name_numb << endl;
-
 		Ffile << name_head << endl;
 		Ffile << group_amount<< endl;
+
 		Ffile.close();
 		Ffile.open(file_way_groups);
 		Ffile << count +1;
