@@ -57,6 +57,7 @@ void menu_groups() {
 	cout << "(1) Print" << endl;
 	cout << "(2) Add" << endl;
 	cout << "(3) Print by ID" << endl;
+	cout << "(4) Print students of group by ID" << endl;
 	cout << "(0) Back" << endl;
 
 	int wait = 0;
@@ -66,7 +67,6 @@ void menu_groups() {
 	if (a == 0) {
 		return;
 	}
-
 
 
 
@@ -109,9 +109,6 @@ void menu_groups() {
 
 	if (a == 2) {
 
-		int massiveStudentsOfGroup[10];
-		int y = 0;
-
 		fstream Ffile;
 		Ffile.open(file_way_groups, ios_base::app);
 
@@ -123,7 +120,10 @@ void menu_groups() {
 		}
 
 
-		int id_group = groups[count - 1].ID_Group + 1;
+		int id_group = 2001;
+		if (count != 0) {
+			id_group = groups[count - 1].ID_Group + 1;
+		}
 
 
 
@@ -139,29 +139,25 @@ void menu_groups() {
 		string group_name_numb = group_name + "-" + snumb;
 
 
+		ifstream IFfileStudents;
+
 
 		cout << "Choose ID of head student of this group(1,2,3....)" << endl;
 
-		ifstream IFfileStudents;
-
-		
 		IFfileStudents.open(file_way_students);
-
 		if (IFfile.is_open() != 1) {
 			cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 			wait = _getch();
 			a == 0;
 			return;
 		}
-
-		const int a12 = 100;
-
 		getline(IFfileStudents, s);
 
 		int count_students = atoi(s.c_str());
 
-		student newStudent[a12];
-		string massive[50];
+		student newStudent[300];
+		int stud_ids[300] = {};
+		int y = 0;
 
 		for (int i = 0; i < count_students; i++) {
 			getline(IFfileStudents, s);
@@ -176,16 +172,34 @@ void menu_groups() {
 			newStudent[i].place_raiting = atoi(s.c_str());
 			getline(IFfileStudents, s);
 			newStudent[i].ID_Group = atoi(s.c_str());
+
 			if (newStudent[i].ID_Group == id_group) {
-				cout << "Student of this group name: " << newStudent[i].name << endl;
+				cout << y+1 << ") Student of this group name: " << newStudent[i].name << endl;
 				cout << "His ID: " << newStudent[i].ID_Student << endl;
+				stud_ids[y] = newStudent[i].ID_Student;
 				y++;
-				massive[y] == newStudent[i].name;
 			}
 		}
-		int his_id;
-		cin >> his_id;
+		string name_head;
+		cout << "Enter ID head student of this group" << endl;
+		int entered_id = 0;
+		bool check8 = false;
+		while (!check8) {
+			cin >> entered_id;
+			for (int i = 0; i < y; i++) {
+				if (stud_ids[i] == entered_id) {
+					cout << "Head student succsesfully added" << endl;
+					check8 = true;
+				}
+			}
+			cout << "Error,you entered wrong ID,try again" << endl;
+		}
 
+		for (int i = 0; i < count_students; i++) {
+			if (newStudent[i].ID_Student == entered_id) {
+				name_head = newStudent[i].name;
+			}
+		}
 
 			
 		
@@ -199,9 +213,8 @@ void menu_groups() {
 		Ffile << id_group << endl;
 
 		Ffile << group_name_numb << endl;
-		string name = massive[his_id];
-		Ffile << name << endl;
 
+		Ffile << name_head << endl;
 		Ffile << group_amount<< endl;
 		Ffile.close();
 		Ffile.open(file_way_groups);
@@ -216,7 +229,8 @@ void menu_students() {
 	cout << "\t\tStudents`s actions(enter number):" << endl;
 	cout << "(1) Print all" << endl;
 	cout << "(2) Add" << endl;
-	cout << "(3) Print by ID" << endl;
+	cout << "(3) Print by index(list number)" << endl;
+	cout << "(4) Print by ID" << endl;
 	cout << "(0) Back" << endl;
 
 	int wait = 0;
@@ -400,6 +414,22 @@ void menu_students() {
 
 	}
 
+	if (a == 4) {
+		cout << "Enter ID of student that u want to find" << endl;
+		string stud_id;
+		bool check7 = false;
+		if (!check7) {
+			cin >> stud_id;
+			for (int i = 0; i < count; i++) {
+				if (newStudent[i].ID_Student == atoi(stud_id.c_str())) {
+					newStudent[i].print();
+					wait = _getch();
+					check7 = true;
+				}
+			}
+			cout << "There are not student with this ID" << endl;
+		}
+	}
 
 	menu_students();
 }
