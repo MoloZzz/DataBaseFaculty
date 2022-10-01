@@ -11,6 +11,12 @@ ofstream OFfile;
 
 HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
+string file_way = "c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\";
+string file_way_students = file_way + "Students.txt";
+string file_way_teachers = file_way + "Teachers.txt";
+string file_way_groups = file_way + "Groups.txt";
+string file_way_disciplines = file_way + "Disciplines.txt";
+string file_wat_works = file_way + "Works.txt";
 
 
 void GoToXY(short x, short y)
@@ -36,7 +42,7 @@ void menu_disciplines() {
 	}
 
 	if (a == 1) {
-		IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Disciplines.txt");
+		IFfile.open(file_way_disciplines);
 
 		string s;
 		getline(IFfile, s);
@@ -62,7 +68,7 @@ void menu_groups() {
 
 	ifstream IFfile;
 	int wait = 0;
-	IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Groups.txt");
+	IFfile.open(file_way_groups);
 	group groups[10];
 	string s;
 	getline(IFfile, s);
@@ -95,7 +101,7 @@ void menu_groups() {
 		int y = 0;
 
 		fstream Ffile;
-		Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Groups.txt", ios_base::app);
+		Ffile.open(file_way_groups, ios_base::app);
 
 
 		int id_group = groups[count - 1].ID_Group + 1;
@@ -119,9 +125,10 @@ void menu_groups() {
 
 		ifstream IFfileStudents;
 
-		IFfileStudents.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt");
+		
+		IFfileStudents.open(file_way_students);
 
-		const int a12 = 30;
+		const int a12 = 100;
 
 		getline(IFfileStudents, s);
 
@@ -171,7 +178,7 @@ void menu_groups() {
 
 		Ffile << group_amount<< endl;
 		Ffile.close();
-		Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Groups.txt");
+		Ffile.open(file_way_groups);
 		Ffile << count +1;
 	}
 
@@ -220,7 +227,7 @@ void menu_students() {
 	}
 
 	ifstream IFfile;
-	IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt");
+	IFfile.open(file_way_students);
 
 	string s;
 	int wait;
@@ -254,7 +261,7 @@ void menu_students() {
 	}
 	if (a == 2) {
 		fstream Ffile;
-		Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt", ios_base::app);
+		Ffile.open(file_way_students, ios_base::app);
 
 		int student_ID = newStudent[count-1].ID_Student;
 			Ffile << student_ID+1;
@@ -335,7 +342,7 @@ void menu_students() {
 			Ffile << "\n";
 		}
 		Ffile.close();
-		Ffile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Students.txt");
+		Ffile.open(file_way_students);
 		Ffile << count + 1;
 
 	}
@@ -376,7 +383,7 @@ void menu_teachers() {
 	}
 	ifstream IFfile;
 	if (a == 1) {
-		IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Teachers.txt");
+		IFfile.open(file_way_teachers);
 
 		string s;
 		getline(IFfile, s);
