@@ -1,5 +1,17 @@
-1
+4
 2001
 PI-10
 Yevchyk Oleksii
 14
+2002
+TR-11
+Grisha Dilov
+45
+2003
+KS-13
+Dima Koval
+21
+2004
+KC-11
+Vitaliy Kalina
+19

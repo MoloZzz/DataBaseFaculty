@@ -15,6 +15,7 @@ HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	string file_way_disciplines = file_way + "Disciplines.txt";
 	string file_way_works = file_way + "Works.txt";
 
+	
 
 
 
@@ -144,9 +145,9 @@ void menu_groups() {
 
 
 		int id_group = 2001;
-		string group_name = "void";
+		string group_name;
         int numb = 0;
-		string name_head = "void";
+		string name_head;
 		int group_amount;
 
 
@@ -163,20 +164,14 @@ void menu_groups() {
 		if (count != 0) {
 			id_group = groups[count - 1].ID_Group + 1;
 		}
-		bool check1 = false;
 
 		cout << "Enter name of new group(without number,example: PI) " << endl;
-		while (!check1) {
-			cin >> group_name;
-			if (group_name.size() > 10) {
-				cout << "Wrong name, name shell be from 1 to 10 symbols,without numbers,try again" << endl;
-			}
-			else {
-				check1 == true;
-			}
-		}
-		cout << "Enter number of new group(without name,example: 12) " << endl;
 
+
+			cin >> group_name;
+			
+
+		cout << "Enter number of new group(without name,example: 12) " << endl;
 		cin >> numb;
 			
 		string snumb = to_string(numb);
@@ -199,15 +194,19 @@ void menu_groups() {
 		cout << "Enter ID head student of this group" << endl;
 		int entered_id = 0;
 		bool check8 = false;
-		while (!check8) {
+		int checker = 0;
+		while (check8 == false) {
 			cin >> entered_id;
 			for (int i = 0; i < y; i++) {
 				if (stud_ids[i] == entered_id) {
 					cout << "Head student succsesfully added" << endl;
 					check8 = true;
+					checker = 1;
 				}
 			}
-			cout << "Error,you entered wrong ID,try again" << endl;
+			if (checker != 1) {
+				cout << "Error,you entered wrong ID,try again" << endl;
+			}
 		}
 
 		for (int i = 0; i < count_students; i++) {
@@ -238,6 +237,18 @@ void menu_groups() {
 		Ffile.close();
 		Ffile.open(file_way_groups);
 		Ffile << count +1;
+	}
+	if (a == 4) {
+		cout << "Enter id of group that u finding"<< endl;
+		int entered_id = 0;
+		cin >> entered_id;
+		cout << "This group students: " << endl;
+		for (int i = 0; i < count_students; i++) {
+			if (newStudent[i].ID_Group == entered_id) {
+				newStudent[i].print();
+			}
+		}
+		wait = _getch();
 	}
 
 	menu_groups();
