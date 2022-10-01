@@ -1,40 +1,31 @@
 #pragma once
 
 #include<iostream>
-
 #include<fstream>
 
 using namespace std;
 
-fstream Ffile;
-ofstream OFfile;
-
 HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
-string file_way = "c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\";
-string file_way_students = file_way + "Students.txt";
-string file_way_teachers = file_way + "Teachers.txt";
-string file_way_groups = file_way + "Groups.txt";
-string file_way_disciplines = file_way + "Disciplines.txt";
-string file_wat_works = file_way + "Works.txt";
-
-
-void GoToXY(short x, short y)
-{
-	SetConsoleCursorPosition(hStdOut, { x, y });
-}
+	string file_way = "c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\";
+	string file_way_students = file_way + "Students.txt";
+	string file_way_teachers = file_way + "Teachers.txt";
+	string file_way_groups = file_way + "Groups.txt";
+	string file_way_disciplines = file_way + "Disciplines.txt";
+	string file_way_works = file_way + "Works.txt";
 
 
 
 void menu_disciplines() {
 
 	system("cls");
-	cout << "Disciplines`s actions(enter number):" << endl;
-	cout << "1) print" << endl;
-	cout << "2) add" << endl;
-	cout << "0) back" << endl;
+	cout << "\t\tDisciplines`s actions(enter number):" << endl;
+	cout << "(1) print" << endl;
+	cout << "(2) add" << endl;
+	cout << "(0) back" << endl;
 	ifstream IFfile;
 
+	int wait = 0;
 	int a = 0;
 	cin >> a;
 	if (a == 0) {
@@ -43,6 +34,12 @@ void menu_disciplines() {
 
 	if (a == 1) {
 		IFfile.open(file_way_disciplines);
+		if (IFfile.is_open() != 1) {
+			cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
+			wait = _getch();
+			a == 0;
+			return;
+		}
 
 		string s;
 		getline(IFfile, s);
@@ -50,15 +47,19 @@ void menu_disciplines() {
 		cout << "This list has entries: " << count << endl;
 		Sleep(500);
 	}
+
+	menu_disciplines();
 }
 
 void menu_groups() {
 	system("cls");
-	cout << "Groups`s actions(enter number):" << endl;
-	cout << "1) print" << endl;
-	cout << "2) add" << endl;
-	cout << "3) print by index" << endl;
-	cout << "0) back" << endl;
+	cout << "\t\tGroups`s actions(enter number):" << endl;
+	cout << "(1) Print" << endl;
+	cout << "(2) Add" << endl;
+	cout << "(3) Print by ID" << endl;
+	cout << "(0) Back" << endl;
+
+	int wait = 0;
 
 	int a = 0;
 	cin >> a;
@@ -66,11 +67,22 @@ void menu_groups() {
 		return;
 	}
 
+
+
+
 	ifstream IFfile;
-	int wait = 0;
 	IFfile.open(file_way_groups);
-	group groups[10];
+
+	if (IFfile.is_open() != 1) {
+		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
+		wait = _getch();
+		a == 0;
+		return;
+	}
+
 	string s;
+	group groups[10];
+
 	getline(IFfile, s);
 	int count = atoi(s.c_str());
 
@@ -103,6 +115,13 @@ void menu_groups() {
 		fstream Ffile;
 		Ffile.open(file_way_groups, ios_base::app);
 
+		if (Ffile.is_open() != 1) {
+			cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
+			wait = _getch();
+			a == 0;
+			return;
+		}
+
 
 		int id_group = groups[count - 1].ID_Group + 1;
 
@@ -127,6 +146,13 @@ void menu_groups() {
 
 		
 		IFfileStudents.open(file_way_students);
+
+		if (IFfile.is_open() != 1) {
+			cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
+			wait = _getch();
+			a == 0;
+			return;
+		}
 
 		const int a12 = 100;
 
@@ -182,46 +208,22 @@ void menu_groups() {
 		Ffile << count +1;
 	}
 
+	menu_groups();
 }
-
-void menu_works() {
-	system("cls");
-	cout << "Works`s actions(enter number):" << endl;
-	cout << "1) print" << endl;
-	cout << "2) add" << endl;
-	cout << "3) print by index" << endl;
-	cout << "0) back" << endl;
-
-	int a = 0;
-	cin >> a;
-	if (a == 0) {
-		return;
-	}
-	ifstream IFfile;
-	if (a == 1) {
-		IFfile.open("c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\Works.txt");
-
-		string s;
-		getline(IFfile, s);
-		int count = atoi(s.c_str());
-		cout << "This list has entries: " << count << endl;
-
-		Sleep(500);
-	}
-
-}
-
 
 void menu_students() {
 	system("cls");
-	cout << "Students`s actions(enter number):" << endl;
-	cout << "1) print" << endl;
-	cout << "2) add" << endl;
-	cout << "3) print by index" << endl;
-	cout << "0) back" << endl;
+	cout << "\t\tStudents`s actions(enter number):" << endl;
+	cout << "(1) Print all" << endl;
+	cout << "(2) Add" << endl;
+	cout << "(3) Print by ID" << endl;
+	cout << "(0) Back" << endl;
+
+	int wait = 0;
 
 	int a = 0;
 	cin >> a;
+
 	if (a == 0) {
 		return;
 	}
@@ -229,12 +231,21 @@ void menu_students() {
 	ifstream IFfile;
 	IFfile.open(file_way_students);
 
-	string s;
-	int wait;
+	if (IFfile.is_open() != 1) {
+		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
+		wait = _getch();
+		a == 0;
+		return;
+	}
+
+	string s; // елемент для считки з файлу
+
 	getline(IFfile, s);
-	const int a1 = 30;
-	const int count = atoi(s.c_str());
-	student newStudent[a1];
+
+
+	int count = atoi(s.c_str());
+	student newStudent[300];
+
 	for (int i = 0; i < count; i++) {
 		getline(IFfile, s);
 		newStudent[i].ID_Student = atoi(s.c_str());
@@ -259,89 +270,116 @@ void menu_students() {
 		}
 		wait = _getch();
 	}
+
 	if (a == 2) {
+
 		fstream Ffile;
 		Ffile.open(file_way_students, ios_base::app);
 
-		int student_ID = newStudent[count-1].ID_Student;
-			Ffile << student_ID+1;
-			Ffile << "\n";
+		if (Ffile.is_open() != 1) {
+			cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
+			wait = _getch();
+			a == 0;
+			return;
+		}
 
+		int student_ID = 0;
+		string student_name = "";
+		string student_surname = "";
+		int contract_number = 0;
+		string studing_type = "";
+		int place_raiting;
+		int ID_Group = 0;
+
+		student_ID = newStudent[count - 1].ID_Student;
 
 		cout << "Enter Student name(only name,without surname) " << endl;
-	tryAgain1:
-		string student_name;
-		cin >> student_name;
-		if (student_name.size() < 3) {
-			cout << "name so short,try again" << endl;
-			goto tryAgain1;
-		}
-		else {
-			Ffile << student_name;
-			Ffile << " ";
+		bool check1 = false;
+		while (!check1) {
+			cin >> student_name;
+			if (student_name.size() < 2 || student_name.size() > 10) {
+				cout << "Incorrect name, try again" << endl;
+				student_name = "";
+			}
+			else {
+				check1 = true;
+			}
 		}
 
 		cout << "Enter Student surname(only name,without name) " << endl;
-	tryAgain2:
-		string student_surname;
-		cin >> student_surname;
-		if (student_surname.size() < 3) {
-			cout << "surname so short,try again" << endl;
-			goto tryAgain2;
-		}
-		else {
-			Ffile << student_surname;
-			Ffile << "\n";
+		bool check2 = false;
+		while (!check2) {
+			cin >> student_surname;
+			if (student_surname.size() < 2) {
+				cout << "surname so short,try again" << endl;
+			}
+			else {
+				check2 = true;
+			}
 		}
 
 
 		cout << "Enter contract " << endl;
-	tryAgain3:
-		int contract_number;
-		cin >> contract_number;
-		if (contract_number < 0 || contract_number > 9999) {
-			cout << "wrong contract number" << endl;
-			goto tryAgain3;
+		bool check3 = false;
+		while (!check3) {
+			cin >> contract_number;
+			if (contract_number < 4200 || contract_number > 4999) {
+				cout << "Wrong contract number, try again! contract number is 4200-4999" << endl;
+			}
+			else {
+				check3 = true;
+			}
 		}
-		else {
-			Ffile << contract_number;
-			Ffile << "\n";
-		}
+
 
 		cout << "Enter type of studing " << endl;
-		string studing_type;
-
-		cin >> studing_type;
-		Ffile << studing_type;
-		Ffile << "\n";
+		bool check4 = false;
+		while (!check4) {
+			cin >> studing_type;
+			if (studing_type == "Full" || studing_type == "Half") {
+				check4 = true;
+			}
+			else {
+				cout << "Wrong type of studing, there are 2 types: Full and Half,try again" << endl;
+			}
+		}
 
 		cout << "Enter place raiting" << endl;
-	tryAgain4:
-		int place_raiting;
 
-		cin >> place_raiting;
-		if (place_raiting < 1 || place_raiting > 1000) {
-			cout << "wrong place rating" << endl;
-			goto tryAgain4;
+		bool check5 = false;
+		while (!check5) {
+			cin >> place_raiting;
+			if (place_raiting < 1 || place_raiting > 999) {
+				cout << "Wrong place rating,try again, place can be from 1 to 999" << endl;
+			}
+			else {
+				check5 = true;
+			}
 		}
-		else {
-			Ffile << place_raiting;
-			Ffile << "\n";
-		}
+	
 
 		cout << "Enter group ID " << endl;
-	tryAgain5:
-		int ID_Group;
-		cin >> ID_Group;
-		if (ID_Group < 0 || ID_Group > 10000) {
-			cout << "wrong group ID" << endl;
-			goto tryAgain5;
+		bool check6 = false;
+		while (!check6) {
+			cin >> ID_Group;
+			if (ID_Group < 2000 || ID_Group > 2100) {
+				cout << "Wrong group ID! Group ID is only from 2000 to 2100" << endl;
+			}
+			else {
+				check6 = true;
+			}
 		}
-		else {
-			Ffile << ID_Group;
-			Ffile << "\n";
-		}
+
+
+		Ffile << student_ID + 1 << endl;
+		Ffile << student_name << " " << student_surname << endl;
+		Ffile << contract_number << endl;
+		Ffile << studing_type << endl;
+		Ffile << place_raiting << endl;
+		Ffile << ID_Group << endl;
+
 		Ffile.close();
+
 		Ffile.open(file_way_students);
 		Ffile << count + 1;
 
@@ -366,15 +404,17 @@ void menu_students() {
 	menu_students();
 }
 
-
 void menu_teachers() {
 
 	system("cls");
-	cout << "Teachers`s actions(enter number):" << endl;
-	cout << "1) print all" << endl;
-	cout << "2) add" << endl;
-	cout << "3) print by index" << endl;
-	cout << "0) back" << endl;
+	cout << "\t\tTeachers`s actions(enter number):" << endl;
+	cout << "(1) print all" << endl;
+	cout << "(2) add" << endl;
+	cout << "(3) print by ID" << endl;
+	cout << "(0) back" << endl;
+
+
+	int wait = 0;
 
 	int a = 0;
 	cin >> a;
@@ -382,14 +422,121 @@ void menu_teachers() {
 		return;
 	}
 	ifstream IFfile;
-	if (a == 1) {
-		IFfile.open(file_way_teachers);
+    IFfile.open(file_way_teachers);
 
-		string s;
-		getline(IFfile, s);
-		int count = atoi(s.c_str());
+	if (IFfile.is_open() != 1) {
+		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
+		wait = _getch();
+		a == 0;
+		return;
+	}
+
+
+    string s;
+	getline(IFfile, s);
+    int count = atoi(s.c_str());
+
+    
+
+
+	if (a == 1) {
+		
+
 
 		cout << "This list has entries: " << count << endl;
+		Sleep(1000);
+	}
+	menu_teachers();
+}
+
+void menu_works() {
+	system("cls");
+	cout << "\t\tWorks`s actions(enter number):" << endl;
+	cout << "(1) print" << endl;
+	cout << "(2) add" << endl;
+	cout << "(0) back" << endl;
+	int wait = 0;
+
+	int a = 0;
+	cin >> a;
+
+	if (a == 0) {
+		return;
+	}
+
+	ifstream IFfile;
+    IFfile.open(file_way_works);
+
+	if (IFfile.is_open() != 1) {
+		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
+		wait = _getch();
+		a == 0;
+		return;
+	}
+
+    string s;
+	getline(IFfile, s);
+	int count = atoi(s.c_str());
+
+	if (a == 1) {
+
+		cout << "This list has entries: " << count << endl;
+
 		Sleep(500);
 	}
+	menu_works();
+}
+
+void menu_errors() {
+	system("cls");
+	cout <<" \t Base files : " << endl;
+	fstream file;
+
+	file.open(file_way_disciplines);
+	if (file.is_open() == 1) {
+		cout << "Disciplines.txt" << endl;
+	}
+	else {
+		cout << "Error with list - Disciplines.txt / is not connected" << endl;
+	}
+	file.close();
+	file.open(file_way_groups);
+	if (file.is_open() == 1) {
+		cout << "Groups.txt" << endl;
+	}
+	else {
+		cout << "Error with list - Groups.txt / is not connected" << endl;
+	}
+	file.close();
+	file.open(file_way_students);
+	if (file.is_open() == 1) {
+		cout << "Students.txt" << endl;
+	}
+	else {
+		cout << "Error with list - Students.txt / is not connected" << endl;
+	}
+	file.close();
+	file.open(file_way_teachers);
+	if (file.is_open() == 1) {
+		cout << "Teachers.txt" << endl;
+	}
+	else {
+		cout << "Error with list - Teachers.txt / is not connected" << endl;
+	}
+	file.close();
+	file.open(file_way_works);
+	if (file.is_open() == 1) {
+		cout << "Disciplines.txt" << endl;
+	}
+	else {
+		cout << "Error with list - Works.txt / is not connected" << endl;
+	}
+	file.close();
+	cout << "\nPress any key to back main menu";
+
+
+	int wait = 0;
+	wait = _getch();
+
+
 }

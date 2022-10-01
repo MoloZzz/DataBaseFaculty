@@ -1,29 +1,29 @@
-13
+17
 3001
 Yevchyk Oleksii
 41001
-full-time education
+Full
 14
 2001
-3002
+3005
 Zinchenco Ivan
 4275
-full-time education
+Full
 19
 2001
-3005
+3006
 Dina Shostak
 4277
 Full
 3
 2002
-3004
+3007
 Dima Koval
 4287
 Full
 12
 2003
-3006
+3008
 Ivan Goltvenko
 4276
 Half
@@ -72,8 +72,32 @@ Full
 26
 2005
 3016
-Ura Kilian
-4256
-Full
-19
+Ilia Kovalev
+4211
+Half
+33
+2008
+3017
+Julian Gus
+4231
+Half
+32
 2007
+3017
+Jonatan Swift
+4236
+Full
+31
+2009
+3018
+Yin Grion
+4223
+Half
+35
+2006
+3019
+Han Hu
+4236
+Half
+29
+2010
