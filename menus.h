@@ -330,7 +330,7 @@ void menu_students() {
 	getline(IFfile, s);
 
 
-	int count = atoi(s.c_str());
+	int count_students = atoi(s.c_str());
 	student newStudent[300];
 
 	//for (int i = 0; i < count; i++) {
@@ -348,13 +348,13 @@ void menu_students() {
 	//	newStudent[i].ID_Group = atoi(s.c_str());
 	//}
 
-	get_file_student(newStudent,count);
+	get_file_student(newStudent, count_students);
 
 
 	if (a == 1) {
 
-		cout << "This list has entries: " << count << endl;
-		for (int i = 0; i < count; i++) {
+		cout << "This list has entries: " << count_students<< endl;
+		for (int i = 0; i < count_students; i++) {
 			newStudent[i].print();
 
 		}
@@ -381,13 +381,13 @@ void menu_students() {
 		int place_raiting;
 		int ID_Group = 0;
 
-		student_ID = newStudent[count - 1].ID_Student;
+		student_ID = newStudent[count_students - 1].ID_Student;
 
-		cout << "Enter ³tudent name(ONLY NAME,without surname): " << endl;
+		cout << "Enter student name(ONLY NAME,without surname): " << endl;
 		bool check1 = false;
 		while (!check1) {
 			cin >> student_name;
-			if (student_name.size() < 2 || student_name.size() > 10) {
+			if (( student_name.size() < 2 || student_name.size() > 10)) {
 				cout << "Incorrect name, try again" << endl;
 				student_name = "";
 			}
@@ -411,13 +411,24 @@ void menu_students() {
 
 		cout << "Enter contract(4200-4999): " << endl;
 		bool check3 = false;
+		bool check_contrack_number = false;
 		while (!check3) {
+			check_contrack_number = false;
 			cin >> contract_number;
 			if (contract_number < 4200 || contract_number > 4999) {
 				cout << "Wrong contract number, try again! contract number is 4200-4999" << endl;
 			}
 			else {
-				check3 = true;
+				for (int i = 0; i < count_students; i++) {
+					if (newStudent[i].contract_number == contract_number)
+						check_contrack_number = true;
+				}
+				if (!check_contrack_number) {
+					check3 = true;
+				}
+				else {
+					cout << "A student with this contract number already exists, check the data and try again." << endl;
+				}
 			}
 		}
 
@@ -442,14 +453,23 @@ void menu_students() {
 
 		cout << "Enter place raiting(1-999)" << endl;
 
-		bool check5 = false;
-		while (!check5) {
+		bool check_place_raiting1 = false;
+		bool check_place_raiting = false;
+		while (!check_place_raiting1) {
+			check_place_raiting = false;
 			cin >> place_raiting;
 			if (place_raiting < 1 || place_raiting > 999) {
 				cout << "Wrong place rating,try again, place can be from 1 to 999" << endl;
 			}
 			else {
-				check5 = true;
+				for (int i = 0; i < count_students; i++) {
+					if (newStudent[i].place_raiting == place_raiting) {
+						cout << "There is already a student with this place in the rating, check the data and try again." << endl;
+						check_place_raiting = true;
+					}
+				}
+				if(!check_place_raiting)
+					check_place_raiting1 = true;
 			}
 		}
 	
@@ -477,7 +497,7 @@ void menu_students() {
 		Ffile.close();
 
 		Ffile.open(file_way_students);
-		Ffile << count + 1;
+		Ffile << count_students + 1;
 
 	}
 
@@ -485,7 +505,7 @@ void menu_students() {
 		cout << "enter index: " << endl;
 		int index;
 		cin >> index;
-		if (index < count) {
+		if (index < count_students) {
 			newStudent[index].print();
 
 		}
@@ -502,7 +522,7 @@ void menu_students() {
 		bool check7 = false;
 		if (!check7) {
 			cin >> stud_id;
-			for (int i = 0; i < count; i++) {
+			for (int i = 0; i < count_students; i++) {
 				if (newStudent[i].ID_Student == atoi(stud_id.c_str())) {
 					newStudent[i].print();
 					wait = _getch();
@@ -632,7 +652,7 @@ void menu_works() {
 		SetConsoleTextAttribute(h, 5 | FOREGROUND_INTENSITY);
 		cout << "\nU should enter: Student ID, Teacher ID, Discipline ID, type of work, topic of work and date of defending." << endl;
 		SetConsoleTextAttribute(h, FOREGROUND_RED);
-		cout << "\nU will not have opportunity to come back,èe attentive!" << endl;
+		cout << "\nU will not have opportunity to come back,be attentive!" << endl;
 		SetConsoleTextAttribute(h, 5 | FOREGROUND_INTENSITY);
 		cout << "\nIf yes - enter any key, or press BACKSPACE to come back" << endl;
 		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
