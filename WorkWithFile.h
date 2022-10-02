@@ -18,7 +18,6 @@ using namespace std;
 
 
 
-HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
 void d(short x, short y)
 {
@@ -39,14 +38,13 @@ void ConsoleCursorVisible(bool show, short size)
 
 
 void menu() {
- 
     SetConsoleTitle(L"Faculty Data Base");
     system("CLS");
     SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
     cout << "\n \t \t \tGitHub - MoloZzz\t \t\t \t\tOLeksii Yevchyk`s work" << endl;
     setlocale(0, "RU");
     ConsoleCursorVisible(false, 100);
-    string T[] = {"Actions with students","Actions with disciplines","Actions with teachers","Actions with groups","Actions with works","Errors menu","Exit"};
+    string T[] = {"Actions with students","Actions with disciplines","Actions with teachers","Actions with groups","Actions with works","Files and errors menu","Exit"};
 
     char aT = 0;
     char c;
@@ -57,7 +55,8 @@ void menu() {
         d(x, y);
         for (char i = 0; i < size(T); i++)
         {
-            if (i == aT) SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+            if (i == aT) SetConsoleTextAttribute(h,
+                BACKGROUND_GREEN |  0);
             else SetConsoleTextAttribute(h, FOREGROUND_GREEN);
             d(x, y++);
             cout << T[i] << endl;

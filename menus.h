@@ -6,9 +6,9 @@
 
 using namespace std;
 
-HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	string file_way = "c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\";
+	string file_way = "c:\\Users\\Yura\\source\\repos\\DataBaseFaculty\\txt_documents\\";
 	string file_way_students = file_way + "Students.txt";
 	string file_way_teachers = file_way + "Teachers.txt";
 	string file_way_groups = file_way + "Groups.txt";
@@ -17,6 +17,33 @@ HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	
 
+void get_file_student(student newStudent[300],int &count_students) {
+	ifstream IFfile_students;
+	IFfile_students.open(file_way_students);
+	if (!IFfile_students.is_open()) {
+		cout << "Error with file Students.txt" << endl;
+		return;
+	}
+	string s;
+	getline(IFfile_students, s);
+	count_students = atoi(s.c_str());  
+
+	for (int i = 0; i < count_students; i++) {
+		getline(IFfile_students, s);
+		newStudent[i].ID_Student = atoi(s.c_str());
+		getline(IFfile_students, s);
+		newStudent[i].name = s;
+		getline(IFfile_students, s);
+		newStudent[i].contract_number = atoi(s.c_str());
+		getline(IFfile_students, s);
+		newStudent[i].studing_type = s;
+		getline(IFfile_students, s);
+		newStudent[i].place_raiting = atoi(s.c_str());
+		getline(IFfile_students, s);
+		newStudent[i].ID_Group = atoi(s.c_str());
+	}
+
+}
 
 
 void menu_disciplines() {
@@ -40,7 +67,7 @@ void menu_disciplines() {
 		if (IFfile.is_open() != 1) {
 			cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 			wait = _getch();
-			a == 0;
+			a = 0;
 			return;
 		}
 
@@ -77,9 +104,11 @@ void menu_groups() {
 	IFfile.open(file_way_groups);
 
 	if (IFfile.is_open() != 1) {
+		SetConsoleTextAttribute(h, FOREGROUND_RED);
 		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 		wait = _getch();
-		a == 0;
+		a = 0;
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 		return;
 	}
 
@@ -104,9 +133,12 @@ void menu_groups() {
 
 	IFfileStudents.open(file_way_students);
 	if (IFfile.is_open() != 1) {
+		SetConsoleTextAttribute(h, FOREGROUND_RED);
 		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 		wait = _getch();
-		a == 0;
+		a = 0;
+
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 		return;
 	}
 	getline(IFfileStudents, s);
@@ -131,11 +163,12 @@ void menu_groups() {
 
 	if (a == 1) {
 		cout << "This list has entries: " << count << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		for (int i = 0; i < count; i++) {
 			groups[i].print();
 			cout << endl;
 		}
-
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 		wait = _getch();
 	}
 
@@ -155,9 +188,11 @@ void menu_groups() {
 		Ffile.open(file_way_groups, ios_base::app);
 
 		if (Ffile.is_open() != 1) {
+			SetConsoleTextAttribute(h, FOREGROUND_RED);
 			cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 			wait = _getch();
-			a == 0;
+			a = 0;
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 			return;
 		}
 
@@ -169,7 +204,9 @@ void menu_groups() {
 
 
 			cin >> group_name;
-			
+			SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			cout << "Succsesfully added name :" << group_name << endl;
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 
 		cout << "Enter number of new group(without name,example: 12) " << endl;
 		cin >> numb;
@@ -177,7 +214,7 @@ void menu_groups() {
 		string snumb = to_string(numb);
 		string group_name_numb = group_name + "-" + snumb;
 
-        cout << "Choose ID of head student of this group(1,2,3....)" << endl;
+        cout << "\tChoose head student of this group: " << endl;
 
 		int stud_ids[300] = {};
 		int y = 0;
@@ -185,7 +222,7 @@ void menu_groups() {
 		for (int i = 0; i < count_students; i++) {
 			if (newStudent[i].ID_Group == id_group) {
 				cout << y+1 << ") Student of this group name: " << newStudent[i].name << endl;
-				cout << "His ID: " << newStudent[i].ID_Student << endl;
+				cout << " His ID: " << newStudent[i].ID_Student << endl;
 				stud_ids[y] = newStudent[i].ID_Student;
 				y++;
 			}
@@ -199,13 +236,17 @@ void menu_groups() {
 			cin >> entered_id;
 			for (int i = 0; i < y; i++) {
 				if (stud_ids[i] == entered_id) {
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 					cout << "Head student succsesfully added" << endl;
 					check8 = true;
 					checker = 1;
+					SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 				}
 			}
 			if (checker != 1) {
+				SetConsoleTextAttribute(h, FOREGROUND_RED);
 				cout << "Error,you entered wrong ID,try again" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 			}
 		}
 
@@ -217,7 +258,7 @@ void menu_groups() {
 
 			
 		
-		cout << "enter students amount of this group: " << std::endl;
+		cout << "Enter students amount of this group(3-50): " << std::endl;
 		bool check2 = false;
 		while (!check2) {
 			cin >> group_amount;
@@ -225,7 +266,9 @@ void menu_groups() {
 				check2 = true;
 			}
 			else {
+				SetConsoleTextAttribute(h, FOREGROUND_RED);
 				cout << "Wrong enter, amount can be from 3 to 50,try again!" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 			}
 		}
 
@@ -278,7 +321,7 @@ void menu_students() {
 	if (IFfile.is_open() != 1) {
 		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 		wait = _getch();
-		a == 0;
+		a = 0;
 		return;
 	}
 
@@ -290,20 +333,23 @@ void menu_students() {
 	int count = atoi(s.c_str());
 	student newStudent[300];
 
-	for (int i = 0; i < count; i++) {
-		getline(IFfile, s);
-		newStudent[i].ID_Student = atoi(s.c_str());
-		getline(IFfile, s);
-		newStudent[i].name = s;
-		getline(IFfile, s);
-		newStudent[i].contract_number = atoi(s.c_str());
-		getline(IFfile, s);
-		newStudent[i].studing_type = s;
-		getline(IFfile, s);
-		newStudent[i].place_raiting = atoi(s.c_str());
-		getline(IFfile, s);
-		newStudent[i].ID_Group = atoi(s.c_str());
-	}
+	//for (int i = 0; i < count; i++) {
+	//	getline(IFfile, s);
+	//	newStudent[i].ID_Student = atoi(s.c_str());
+	//	getline(IFfile, s);
+	//	newStudent[i].name = s;
+	//	getline(IFfile, s);
+	//	newStudent[i].contract_number = atoi(s.c_str());
+	//	getline(IFfile, s);
+	//	newStudent[i].studing_type = s;
+	//	getline(IFfile, s);
+	//	newStudent[i].place_raiting = atoi(s.c_str());
+	//	getline(IFfile, s);
+	//	newStudent[i].ID_Group = atoi(s.c_str());
+	//}
+
+	get_file_student(newStudent,count);
+
 
 	if (a == 1) {
 
@@ -323,7 +369,7 @@ void menu_students() {
 		if (Ffile.is_open() != 1) {
 			cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 			wait = _getch();
-			a == 0;
+			a = 0;
 			return;
 		}
 
@@ -337,7 +383,7 @@ void menu_students() {
 
 		student_ID = newStudent[count - 1].ID_Student;
 
-		cout << "Enter Student name(only name,without surname) " << endl;
+		cout << "Enter ³tudent name(ONLY NAME,without surname): " << endl;
 		bool check1 = false;
 		while (!check1) {
 			cin >> student_name;
@@ -350,12 +396,12 @@ void menu_students() {
 			}
 		}
 
-		cout << "Enter Student surname(only name,without name) " << endl;
+		cout << "Enter student surname(ONLY SURNAME,without name): " << endl;
 		bool check2 = false;
 		while (!check2) {
 			cin >> student_surname;
 			if (student_surname.size() < 2) {
-				cout << "surname so short,try again" << endl;
+				cout << "Entered surname so short,try again" << endl;
 			}
 			else {
 				check2 = true;
@@ -363,7 +409,7 @@ void menu_students() {
 		}
 
 
-		cout << "Enter contract " << endl;
+		cout << "Enter contract(4200-4999): " << endl;
 		bool check3 = false;
 		while (!check3) {
 			cin >> contract_number;
@@ -376,19 +422,25 @@ void menu_students() {
 		}
 
 
-		cout << "Enter type of studing " << endl;
+		cout << "Enter type of studing(Half or Full) " << endl;
 		bool check4 = false;
 		while (!check4) {
 			cin >> studing_type;
-			if (studing_type == "Full" || studing_type == "Half") {
+			if (studing_type == "Full" || studing_type == "Half" || studing_type == "full" || studing_type == "half") {
+				if (studing_type == "full")
+					studing_type = "Full";
+				if (studing_type == "half")
+					studing_type = "Half";
+
 				check4 = true;
+				
 			}
 			else {
 				cout << "Wrong type of studing, there are 2 types: Full and Half,try again" << endl;
 			}
 		}
 
-		cout << "Enter place raiting" << endl;
+		cout << "Enter place raiting(1-999)" << endl;
 
 		bool check5 = false;
 		while (!check5) {
@@ -402,11 +454,11 @@ void menu_students() {
 		}
 	
 
-		cout << "Enter group ID " << endl;
+		cout << "Enter group ID(2001-2099) " << endl;
 		bool check6 = false;
 		while (!check6) {
 			cin >> ID_Group;
-			if (ID_Group < 2000 || ID_Group > 2100) {
+			if (ID_Group < 2000 || ID_Group > 2099) {
 				cout << "Wrong group ID! Group ID is only from 2000 to 2100" << endl;
 			}
 			else {
@@ -487,7 +539,7 @@ void menu_teachers() {
 	if (IFfile.is_open() != 1) {
 		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 		wait = _getch();
-		a == 0;
+		a = 0;
 		return;
 	}
 
@@ -500,21 +552,19 @@ void menu_teachers() {
 
 
 	if (a == 1) {
-		
-
-
 		cout << "This list has entries: " << count << endl;
 		Sleep(1000);
 	}
+
 	menu_teachers();
 }
 
 void menu_works() {
 	system("cls");
 	cout << "\t\tWorks`s actions(enter number):" << endl;
-	cout << "(1) print" << endl;
-	cout << "(2) add" << endl;
-	cout << "(0) back" << endl;
+	cout << "(1) Print all" << endl;
+	cout << "(2) Add" << endl;
+	cout << "(0) Back" << endl;
 	int wait = 0;
 
 	int a = 0;
@@ -524,28 +574,128 @@ void menu_works() {
 		return;
 	}
 
-	ifstream IFfile;
-    IFfile.open(file_way_works);
+	ifstream IFfile_works;
+    IFfile_works.open(file_way_works);
 
-	if (IFfile.is_open() != 1) {
+	if (IFfile_works.is_open() != 1) {
 		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 		wait = _getch();
-		a == 0;
+		a = 0;
 		return;
 	}
 
     string s;
-	getline(IFfile, s);
-	int count = atoi(s.c_str());
+	getline(IFfile_works, s);
+	int count_works = atoi(s.c_str());
+	work works[150] = {};
+	for (int i = 0; i < count_works; i++) {
+		getline(IFfile_works,s);
+		works[i].ID_Work = atoi(s.c_str());
+		getline(IFfile_works, s);
+		works[i].ID_Student = atoi(s.c_str());
+		getline(IFfile_works, s);
+		works[i].ID_Teacher = atoi(s.c_str());
+		getline(IFfile_works, s);
+		works[i].ID_Discipline = atoi(s.c_str());
+		getline(IFfile_works, s);
+		works[i].work_type = s;
+		getline(IFfile_works, s);
+		works[i].date_def = s;
+		getline(IFfile_works, s);
+		works[i].topic = s;
+	}
+
+	student students[300];
+	int count_students = 0;
+	get_file_student(students,count_students);
 
 	if (a == 1) {
 
-		cout << "This list has entries: " << count << endl;
+		cout << "This list has entries: " << count_works << endl;
+		for (int i = 0; i < count_works; i++) {
+			works[i].print();
+		}
+		wait = _getch();
+	}
 
-		Sleep(500);
+	if (a == 2) {
+		int student_id = 0;
+		int work_id = 0;
+		int teacher_id = 0;
+		int discipline_id = 0;
+		work_types work_type;
+		string topic;
+		date date_def;
+
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		cout << "Are u sure?" << endl;
+		SetConsoleTextAttribute(h, 5 | FOREGROUND_INTENSITY);
+		cout << "\nU should enter: Student ID, Teacher ID, Discipline ID, type of work, topic of work and date of defending." << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_RED);
+		cout << "\nU will not have opportunity to come back,èe attentive!" << endl;
+		SetConsoleTextAttribute(h, 5 | FOREGROUND_INTENSITY);
+		cout << "\nIf yes - enter any key, or press BACKSPACE to come back" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+		int y_back = _getch();
+		if (y_back == 8) {
+			a = 0;
+			return;
+		}
+		system("cls");
+		bool check_id = false;
+		cout << "Enter Student ID(3001-3999): " << endl;
+		string stud_id = "";
+		int checker2 = 0;
+
+
+		while (check_id == false) {
+			cin >> stud_id;
+			if (atoi(stud_id.c_str()) == NULL) {
+				SetConsoleTextAttribute(h, FOREGROUND_RED);
+				cout << "Wrong enter! try again" << endl;;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+			}else {
+				if (atoi(stud_id.c_str()) < 3999 && atoi(stud_id.c_str()) > 3000) {
+					for (int i = 0; i < count_students; i++) {
+						if (students[i].ID_Student == atoi(stud_id.c_str())) {
+							
+							SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+							cout << "Succsess!" << endl;
+							cout << "Name of this student is " << students[i].name << endl;
+							SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+							check_id = true;
+							student_id = atoi(stud_id.c_str());
+							checker2 = 1;
+						}
+					}
+					if (checker2 == 0) {
+						cout << "Entered ID is correct, but no one student have it,try again!" << endl;
+					}
+				}
+				else {
+					SetConsoleTextAttribute(h, FOREGROUND_RED);
+					cout << "Wrong enter! It is not student ID!" << endl;
+					cout << "\nU can enter only real student ID(3001-3999)" << endl;
+					cout << "Try again!" << endl;
+					SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+				}
+
+			}
+		}
+
+
+
+
+
+
+		Sleep(5000);
+
+
+		
 	}
 	menu_works();
 }
+
 
 void menu_errors() {
 	system("cls");
