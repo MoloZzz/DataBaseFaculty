@@ -57,6 +57,17 @@ struct discipline {
 	std::string date_exam;
 	int mark;
 	std::string obligation;
+	void print() {
+
+		std::cout << "ID discipline: " << ID_Discipline << std::endl;
+		std::cout << "Discipline name: " << name << std::endl;
+		std::cout << "Teacher ID: " << ID_teacher << std::endl;
+		std::cout << "Date exam: " << date_exam << std::endl;
+		std::cout << "Mark: " << mark << std::endl;
+		std::cout << "Obligation: " << obligation << std::endl;
+		std::cout << std::endl;
+	}
+
 };
 
 struct group {
@@ -101,8 +112,16 @@ struct work {
 struct teacher {
 	ID ID_teacher;
 	std::string name;
-	ID ID_Discipline;
+	ID ID_discipline;
 	std::string graduation;
+
+	void print() {
+		std::cout << "Teacher ID: " << ID_teacher << std::endl;
+		std::cout << "Name: " << name << std::endl;
+		std::cout << "ID discipline: " << ID_discipline << std::endl;
+		std::cout << "Graduation: " << graduation << std::endl;
+		std::cout << std::endl;
+	}
 };
 
 

@@ -8,6 +8,11 @@ using namespace std;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
+void d(short x, short y)
+{
+	SetConsoleCursorPosition(h, { x,y });
+}
+
 	string file_way = "c:\\Users\\Yura\\source\\repos\\DataBaseFaculty\\txt_documents\\";
 	string file_way_students = file_way + "Students.txt";
 	string file_way_teachers = file_way + "Teachers.txt";
@@ -122,7 +127,7 @@ void get_file_teachers(teacher teachers[300],int &count_teachers) {
 		getline(IFfile_teachers, s);
 		teachers[i].name = s;
 		getline(IFfile_teachers, s);
-		teachers[i].ID_Discipline = atoi(s.c_str());
+		teachers[i].ID_discipline = atoi(s.c_str());
 		getline(IFfile_teachers, s);
 		teachers[i].graduation = s;
 	}
@@ -153,6 +158,21 @@ void get_file_groups(group groups[300],int &count_groups) {
 	}
 }
 
+bool check_numbers(string s) {
+	int k = 0, i = 0;
+	while (s[i])
+	{
+		if (s[i] >= '0' && s[i] <= '9') {
+			k++;
+			return 1; 
+		}
+		i++;
+	}
+
+	if (k == 0) return 0;
+}
+
+
 
 void menu_disciplines() {
 
@@ -162,28 +182,38 @@ void menu_disciplines() {
 	cout << "(2) add" << endl;
 	cout << "(0) back" << endl;
 	ifstream IFfile;
-
+	IFfile.open(file_way_disciplines);
+	string s;
+	getline(IFfile, s);
+	int count_disciplines = atoi(s.c_str());
 	int wait = 0;
 	int a = 0;
 	cin >> a;
+
 	if (a == 0) {
 		return;
 	}
 
+	discipline disciplines[300];
+	get_file_disciplines(disciplines, count_disciplines);
+
 	if (a == 1) {
 		IFfile.open(file_way_disciplines);
+
 		if (IFfile.is_open() != 1) {
 			cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 			wait = _getch();
 			a = 0;
 			return;
 		}
-
-		string s;
-		getline(IFfile, s);
-		int count = atoi(s.c_str());
-		cout << "This list has entries: " << count << endl;
-		Sleep(500);
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE);
+		cout << "This list has entries: " << count_disciplines << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		for (int i = 0; i < count_disciplines; i++) {
+			disciplines[i].print();
+		}
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		wait = _getch();
 	}
 
 	menu_disciplines();
@@ -212,11 +242,11 @@ void menu_groups() {
 	IFfile.open(file_way_groups);
 
 	if (IFfile.is_open() != 1) {
-		SetConsoleTextAttribute(h, FOREGROUND_RED);
+		SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
 		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 		wait = _getch();
 		a = 0;
-		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		return;
 	}
 
@@ -232,12 +262,12 @@ void menu_groups() {
 
 	IFfileStudents.open(file_way_students);
 	if (IFfile.is_open() != 1) {
-		SetConsoleTextAttribute(h, FOREGROUND_RED);
+		SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
 		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 		wait = _getch();
 		a = 0;
 
-		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		return;
 	}
 	getline(IFfileStudents, s);
@@ -261,21 +291,19 @@ void menu_groups() {
 	}
 
 	if (a == 1) {
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE);
 		cout << "This list has entries: " << count << endl;
 		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		for (int i = 0; i < count; i++) {
 			groups[i].print();
 			cout << endl;
 		}
-		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		wait = _getch();
 	}
 
 	if (a == 2) {
 		
-
-
-
 		int id_group = 2001;
 		string group_name;
         int numb = 0;
@@ -287,11 +315,11 @@ void menu_groups() {
 		Ffile.open(file_way_groups, ios_base::app);
 
 		if (Ffile.is_open() != 1) {
-			SetConsoleTextAttribute(h, FOREGROUND_RED);
+			SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
 			cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 			wait = _getch();
 			a = 0;
-			SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 			return;
 		}
 
@@ -299,13 +327,33 @@ void menu_groups() {
 			id_group = groups[count - 1].ID_Group + 1;
 		}
 
+		SetConsoleTextAttribute(h, 5);
+		cout << "Are u sure? U should enter name,group number and choose head student(only from students in our base!!!)" << endl;
+		cout << " This will be group with ID: " << id_group << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_RED|FOREGROUND_INTENSITY);
+		cout << " WARNING! " << endl;
+		SetConsoleTextAttribute(h, 6);
+		cout << "Press BACKSPACE to back menu" << endl;
+		SetConsoleTextAttribute(h, 3);
+		cout << "Or other bottom to continue" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		wait = _getch();
+		if (wait == 8) {
+			return;
+		}
+
+
+
+
+
+
 		cout << "Enter name of new group(without number,example: PI) " << endl;
 
 
 			cin >> group_name;
 			SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 			cout << "Succsesfully added name :" << group_name << endl;
-			SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 
 		cout << "Enter number of new group(without name,example: 12) " << endl;
 		cin >> numb;
@@ -339,13 +387,13 @@ void menu_groups() {
 					cout << "Head student succsesfully added" << endl;
 					check8 = true;
 					checker = 1;
-					SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+					SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 				}
 			}
 			if (checker != 1) {
 				SetConsoleTextAttribute(h, FOREGROUND_RED);
 				cout << "Error,you entered wrong ID,try again" << endl;
-				SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 			}
 		}
 
@@ -367,7 +415,7 @@ void menu_groups() {
 			else {
 				SetConsoleTextAttribute(h, FOREGROUND_RED);
 				cout << "Wrong enter, amount can be from 3 to 50,try again!" << endl;
-				SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 			}
 		}
 
@@ -380,6 +428,7 @@ void menu_groups() {
 		Ffile.open(file_way_groups);
 		Ffile << count +1;
 	}
+	
 	if (a == 4) {
 		cout << "Enter id of group that u finding"<< endl;
 		int entered_id = 0;
@@ -403,6 +452,7 @@ void menu_students() {
 	cout << "(2) Add" << endl;
 	cout << "(3) Print by index(list number)" << endl;
 	cout << "(4) Print by ID" << endl;
+	cout << "(5) Delete by ID" << endl;
 	cout << "(0) Back" << endl;
 
 	int wait = 0;
@@ -458,19 +508,31 @@ void menu_students() {
 			newStudent[i].print();
 
 		}
-		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		wait = _getch();
 	}
 
 	if (a == 2) {
 
+		SetConsoleTextAttribute(h, 5);
+		cout << "Are u sure? U should enter name,contract number,styding type,place raiting,ID group" << endl;
+		SetConsoleTextAttribute(h, 6);
+		cout << "Press BACKSPACE to back menu" << endl;
+		SetConsoleTextAttribute(h, 3);
+		cout << "Or other bottom to continue" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		wait = _getch();
+		if (wait == 8) {
+			return;
+		}
+
 		fstream Ffile;
 		Ffile.open(file_way_students, ios_base::app);
 
 		if (Ffile.is_open() != 1) {
-			SetConsoleTextAttribute(h, FOREGROUND_RED);
+			SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
 			cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
-			SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 			wait = _getch();
 			a = 0;
 			return;
@@ -491,7 +553,9 @@ void menu_students() {
 		while (!check1) {
 			cin >> student_name;
 			if (( student_name.size() < 2 || student_name.size() > 10)) {
+				SetConsoleTextAttribute(h, FOREGROUND_RED);
 				cout << "Incorrect name, try again" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 				student_name = "";
 			}
 			else {
@@ -504,7 +568,9 @@ void menu_students() {
 		while (!check2) {
 			cin >> student_surname;
 			if (student_surname.size() < 2) {
+				SetConsoleTextAttribute(h, FOREGROUND_RED);
 				cout << "Entered surname so short,try again" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 			}
 			else {
 				check2 = true;
@@ -519,7 +585,9 @@ void menu_students() {
 			check_contrack_number = false;
 			cin >> contract_number;
 			if (contract_number < 4200 || contract_number > 4999) {
+				SetConsoleTextAttribute(h, FOREGROUND_RED);
 				cout << "Wrong contract number, try again! contract number is 4200-4999" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 			}
 			else {
 				for (int i = 0; i < count_students; i++) {
@@ -552,7 +620,9 @@ void menu_students() {
 				
 			}
 			else {
+				SetConsoleTextAttribute(h, FOREGROUND_RED);
 				cout << "Wrong type of studing, there are 2 types: Full and Half,try again" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 			}
 		}
 
@@ -623,7 +693,7 @@ void menu_students() {
 		else {
 			SetConsoleTextAttribute(h,3);
 			cout << "index more then all students count" << endl;
-			SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		}
 		wait = _getch();
 
@@ -644,8 +714,28 @@ void menu_students() {
 			}
 			SetConsoleTextAttribute(h, FOREGROUND_BLUE);
 			cout << "There are not student with this ID" << endl;
-			SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		}
+	}
+
+	if (a == 5) {
+		int index_del = 0;
+		fstream Ffile_test;
+		ifstream file;
+		Ffile_test.open("c:\\Users\\Yura\\source\\repos\\DataBaseFaculty\\txt_documents\\TEST.txt");
+		file.open("c:\\Users\\Yura\\source\\repos\\DataBaseFaculty\\txt_documents\\TEST.txt");
+
+		
+
+			file.seekg(0, ios_base::end);
+		    cout << "Ðàçìåð ôàéëà (â áàéòàõ): " << file.tellg();
+			Sleep(1000);
+			system("cls");
+			d(50, 12);
+			cout << "ÊÎÌÀÍÄÀ Â ÐÎÇÐÎÁÖI" << endl;
+
+		Sleep(2000);
+
 	}
 
 	menu_students();
@@ -670,7 +760,6 @@ void menu_teachers() {
 	}
 	ifstream IFfile;
     IFfile.open(file_way_teachers);
-
 	if (IFfile.is_open() != 1) {
 		SetConsoleTextAttribute(h, FOREGROUND_RED);
 		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
@@ -680,23 +769,178 @@ void menu_teachers() {
 		return;
 	}
 
-	if (a == 1) {
-		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
-	}
+	string s;
+	teacher teachers[300];
 
-    string s;
+	
 	getline(IFfile, s);
-    int count = atoi(s.c_str());
+	int count_teachers = atoi(s.c_str());
 
-    
-
+	get_file_teachers(teachers, count_teachers);
 
 	if (a == 1) {
-		cout << "This list has entries: " << count << endl;
-		Sleep(1000);
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE);
+		cout << "There are " << count_teachers << " teachers" <<endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		for (int i = 0; i < count_teachers; i++) {
+			teachers[i].print();
+		}
+		wait = _getch();
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 	}
 
+	if (a == 2) {
+		SetConsoleTextAttribute(h, 5);
+		cout << "Are u sure? U should enter name,ID discipline,graduation" << endl;
+		SetConsoleTextAttribute(h, 6);
+		cout << "Press BACKSPACE to back menu" << endl;
+		SetConsoleTextAttribute(h, 3);
+		cout << "Or other bottom to continue" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		wait = _getch();
+		if (wait == 8) {
+			return;
+		}
+		ID ID_teacher = 0;
+		string name = "void";
+		ID ID_discipline = 0;
+		string graduation;
+
+		string check_ID_teacher;
+		string check_ID_discipline;
+
+		string first_name = "";
+		string last_name = "";
+
+		if (count_teachers == 0) {
+			ID_teacher = 4001;
+		}else {
+			ID_teacher = teachers[count_teachers - 1].ID_teacher + 1;
+		}
+
+		cout << "Enter teacher NAME(without surname): " << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+		bool check_name = false;
+		while (!check_name) {
+
+			cin >> first_name;
+
+			if (( first_name.size() > 3 && first_name.size() < 15 ) && !check_numbers(first_name)) {
+				SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+				cout << "Successfull added name" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+				check_name = true;
+			}else if (check_numbers(first_name)) {
+				SetConsoleTextAttribute(h, FOREGROUND_RED);
+				cout << "Name cant have numbers,try again" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			}else {
+				SetConsoleTextAttribute(h, FOREGROUND_RED);
+				cout << "Wrong enter,try again" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		    }
+		}
+
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+		cout << "Enter teacher SURNAME(without name): " << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		bool check_name2 = false;
+		while (!check_name2) {
+
+			cin >> last_name;
+
+			if ((last_name.size() > 3 && last_name.size() < 15) && !check_numbers(last_name)) {
+				SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+				cout << "Successfull added surname" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+				check_name2 = true;
+			}
+			else if (check_numbers(last_name)) {
+				SetConsoleTextAttribute(h, FOREGROUND_RED);
+				cout << "Surname cant have numbers,try again" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			}
+			else {
+				SetConsoleTextAttribute(h, FOREGROUND_RED);
+				cout << "Wrong enter,try again" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			}
+		}
+
+		bool check_disc_id = false;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE);
+		cout << "Enter discipline Id(1001-1999): " << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+
+		while (!check_disc_id) {
+			cin >> ID_discipline;
+			if (ID_discipline < 1001 || ID_discipline > 1999) {
+				SetConsoleTextAttribute(h, FOREGROUND_RED);
+				cout << "Wrong enter, ID should be from 1001 to 1999,be attantive and try again" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			}
+			else {
+				SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+				cout << "Successfull added discipline ID" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+				check_disc_id = true;
+			}
+
+		}
+		bool check_graduation = false;
+		cout << "Choose graduation: " << endl;
+		cout << "1) dosent" << endl;
+		cout << "2) proffesor" << endl;
+		cout << "3) assistent" << endl;
+		cout << "4) aspirant" << endl;
+
+		string check_enter;
+		int grad = 0;
+
+		grad1:
+		cin >> check_enter;
+		
+		grad = atoi(check_enter.c_str());
+		if (grad > 0 && grad < 5) {
+
+			if(grad == 1)
+				graduation = "dosent";
+			if (grad == 2)
+				graduation = "proffesor";
+			if (grad == 3)
+				graduation = "assistent";
+			if (grad == 3)
+				graduation = "asspirant";
+		}
+		else {
+			SetConsoleTextAttribute(h, FOREGROUND_RED);
+			cout << "Wrong enter,try again." << endl;
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			goto grad1;
+		}
+		
+
+		name = first_name + " " + last_name;
+
+
+		fstream Ffile_teachers;
+		Ffile_teachers.open(file_way_teachers,ios_base::app);
+
+		Ffile_teachers << ID_teacher << endl;
+		Ffile_teachers << name << endl;
+		Ffile_teachers << ID_discipline << endl;
+		Ffile_teachers << graduation << endl;
+
+		Ffile_teachers.close();
+		Ffile_teachers.open(file_way_teachers);
+		Ffile_teachers << count_teachers + 1;
+		SetConsoleTextAttribute(h, 14);
+		cout << "Succsefully added teacher" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		Sleep(2000);
+	}
+	
 	menu_teachers();
 }
 
@@ -719,10 +963,10 @@ void menu_works() {
     IFfile_works.open(file_way_works);
 
 	if (IFfile_works.is_open() != 1) {
-		SetConsoleTextAttribute(h, FOREGROUND_RED);
+		SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
 		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 		wait = _getch();
-		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		a = 0;
 		return;
 	}
@@ -745,7 +989,7 @@ void menu_works() {
 		for (int i = 0; i < count_works; i++) {
 			works[i].print();
 		}
-		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		wait = _getch();
 	}
 
@@ -766,7 +1010,7 @@ void menu_works() {
 		cout << "\nU will not have opportunity to come back,be attentive!" << endl;
 		SetConsoleTextAttribute(h, 5 | FOREGROUND_INTENSITY);
 		cout << "\nIf yes - enter any key, or press BACKSPACE to come back" << endl;
-		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		int y_back = _getch();
 		if (y_back == 8) {
 			a = 0;
@@ -791,7 +1035,7 @@ void menu_works() {
 			if (atoi(stud_id.c_str()) == NULL) {
 				SetConsoleTextAttribute(h, FOREGROUND_RED);
 				cout << "Wrong enter! try again" << endl;;
-				SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 			}else {
 				if (atoi(stud_id.c_str()) < 3999 && atoi(stud_id.c_str()) > 3000) {
 					for (int i = 0; i < count_students; i++) {
@@ -800,7 +1044,7 @@ void menu_works() {
 							SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 							cout << "Succsess!" << endl;
 							cout << "Name of this student is " << students[i].name << endl;
-							SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+							SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 							check_id = true;
 							student_id = atoi(stud_id.c_str());
 							checker2 = 1;
@@ -815,7 +1059,7 @@ void menu_works() {
 					cout << "Wrong enter! It is not student ID!" << endl;
 					cout << "\nU can enter only real student ID(3001-3999)" << endl;
 					cout << "Try again!" << endl;
-					SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+					SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 				}
 
 			}
@@ -841,7 +1085,9 @@ void menu_works() {
 
 void menu_errors() {
 	system("cls");
+	SetConsoleTextAttribute(h, 14);
 	cout <<" \t Base files : " << endl;
+	SetConsoleTextAttribute(h, 11);
 	fstream file;
 
 	file.open(file_way_disciplines);
@@ -884,6 +1130,7 @@ void menu_errors() {
 		cout << "Error with list - Works.txt / is not connected" << endl;
 	}
 	file.close();
+	SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 	cout << "\nPress any key to back main menu";
 
 
