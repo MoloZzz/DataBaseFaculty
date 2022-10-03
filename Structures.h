@@ -54,9 +54,9 @@ struct discipline {
 	ID ID_Discipline;
 	std::string name;
 	ID ID_teacher;
-	date date_exam;
+	std::string date_exam;
 	int mark;
-	obligations obligation;
+	std::string obligation;
 };
 
 struct group {
@@ -100,9 +100,9 @@ struct work {
 
 struct teacher {
 	ID ID_teacher;
-	full_name name;
+	std::string name;
 	ID ID_Discipline;
-	graduations graduation;
+	std::string graduation;
 };
 
 

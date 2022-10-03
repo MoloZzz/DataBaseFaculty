@@ -17,7 +17,7 @@ HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	
 
-void get_file_student(student newStudent[300],int &count_students) {
+void get_file_students(student newStudent[300],int &count_students) {
 	ifstream IFfile_students;
 	IFfile_students.open(file_way_students);
 	if (!IFfile_students.is_open()) {
@@ -73,6 +73,84 @@ void get_file_works(work works[300], int& count_works) {
 		works[i].topic = s;
 	}
 
+}
+
+void get_file_disciplines(discipline disciplines[300], int& count_disciplines) {
+	ifstream IFfile_disciplines;
+	IFfile_disciplines.open(file_way_disciplines);
+	if (!IFfile_disciplines.is_open()) {
+		cout << "Error with file Disciplines.txt" << endl;
+		return;
+	}
+	string s;
+	getline(IFfile_disciplines, s);
+	count_disciplines = atoi(s.c_str());
+
+	for (int i = 0; i < count_disciplines; i++) {
+		getline(IFfile_disciplines, s);
+		disciplines[i].ID_Discipline = atoi(s.c_str());
+		getline(IFfile_disciplines, s);
+		disciplines[i].name = s;
+		getline(IFfile_disciplines, s);
+		disciplines[i].ID_teacher = atoi(s.c_str());
+		getline(IFfile_disciplines, s);
+		disciplines[i].date_exam = s;
+		getline(IFfile_disciplines, s);
+		disciplines[i].mark = atoi(s.c_str());
+		getline(IFfile_disciplines, s);
+		disciplines[i].obligation = s;
+
+	}
+}
+
+void get_file_teachers(teacher teachers[300],int &count_teachers) {
+	ifstream IFfile_teachers;
+	IFfile_teachers.open(file_way_teachers);
+	if (!IFfile_teachers.is_open()) {
+		SetConsoleTextAttribute(h, FOREGROUND_RED);
+		cout << "Error with file Teachers.txt" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+		return;
+	}
+	string s;
+	getline(IFfile_teachers, s);
+	count_teachers = atoi(s.c_str());
+
+	for (int i = 0; i < count_teachers; i++) {
+		getline(IFfile_teachers, s);
+		teachers[i].ID_teacher = atoi(s.c_str());
+		getline(IFfile_teachers, s);
+		teachers[i].name = s;
+		getline(IFfile_teachers, s);
+		teachers[i].ID_Discipline = atoi(s.c_str());
+		getline(IFfile_teachers, s);
+		teachers[i].graduation = s;
+	}
+}
+
+void get_file_groups(group groups[300],int &count_groups) {
+	ifstream IFfile_groups;
+	IFfile_groups.open(file_way_groups);
+	if (!IFfile_groups.is_open()) {
+		SetConsoleTextAttribute(h, FOREGROUND_RED);
+		cout << "Error with file Groups.txt" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+		return;
+	}
+	string s;
+	getline(IFfile_groups, s);
+	count_groups = atoi(s.c_str());
+
+	for (int i = 0; i < count_groups; i++) {
+		getline(IFfile_groups, s);
+		groups[i].ID_Group = atoi(s.c_str());
+		getline(IFfile_groups, s);
+		groups[i].name = s;
+		getline(IFfile_groups, s);
+		groups[i].head_student = s;
+		getline(IFfile_groups, s);
+		groups[i].students_amount = atoi(s.c_str());
+	}
 }
 
 
@@ -143,21 +221,12 @@ void menu_groups() {
 	}
 
 	string s;
-	group groups[100];
+	group groups[300];
 
 	getline(IFfile, s);
 	int count = atoi(s.c_str());
-
-	for (int i = 0; i < count; i++) {
-		getline(IFfile, s);
-		groups[i].ID_Group = atoi(s.c_str());
-		getline(IFfile, s);
-		groups[i].name = s;
-		getline(IFfile, s);
-		groups[i].head_student = s;
-		getline(IFfile, s);
-		groups[i].students_amount = atoi(s.c_str());
-	}
+	get_file_groups(groups,count);
+	
 
 	ifstream IFfileStudents;
 
@@ -378,7 +447,7 @@ void menu_students() {
 	//	newStudent[i].ID_Group = atoi(s.c_str());
 	//}
 
-	get_file_student(newStudent, count_students);
+	get_file_students(newStudent, count_students);
 
 
 	if (a == 1) {
@@ -667,7 +736,7 @@ void menu_works() {
 
 	student students[300];
 	int count_students = 0;
-	get_file_student(students,count_students);
+	get_file_students(students,count_students);
 
 	if (a == 1) {
 		SetConsoleTextAttribute(h, 1);
@@ -751,6 +820,10 @@ void menu_works() {
 
 			}
 		}
+
+		bool check_discipline_id = false;
+		string disc_id = "";
+
 
 
 
