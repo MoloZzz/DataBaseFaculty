@@ -37,8 +37,26 @@ void ConsoleCursorVisible(bool show, short size)
 
 
 
+
 void menu() {
     SetConsoleTitle(L"Faculty Data Base");
+
+    {
+        SetConsoleTextAttribute(h, 5);
+        ConsoleCursorVisible(false, 100);
+        int timer = 0;
+        d(50, 12);
+        std::cout << "Data Base Faculty";
+        SetConsoleTextAttribute(h, 5);
+        d(20, 20);
+        cout << "Version 1.6";
+        d(85, 20);
+        std::cout << "GitHub - MoloZzz";
+        d(48, 14);
+        SetConsoleTextAttribute(h, rand() % 20);
+        cout << "Press any key to start" << std::endl;
+        timer = _getch();
+    }
     system("CLS");
     SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
     cout << "\n \t \t \tGitHub - MoloZzz\t \t\t \t\tOLeksii Yevchyk`s work" << endl;
