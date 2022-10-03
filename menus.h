@@ -1082,7 +1082,6 @@ void menu_works() {
 	menu_works();
 }
 
-
 void menu_errors() {
 	system("cls");
 	SetConsoleTextAttribute(h, 14);
