@@ -53,7 +53,7 @@ void menu() {
         d(85, 20);
         std::cout << "GitHub - MoloZzz";
         d(48, 14);
-        SetConsoleTextAttribute(h, rand() % 20);
+        SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
         cout << "Press any key to start" << std::endl;
         timer = _getch();
     }

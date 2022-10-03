@@ -45,6 +45,36 @@ void get_file_student(student newStudent[300],int &count_students) {
 
 }
 
+void get_file_works(work works[300], int& count_works) {
+	ifstream IFfile_works;
+	IFfile_works.open(file_way_works);
+	if (!IFfile_works.is_open()) {
+		cout << "Error with file Works.txt" << endl;
+		return;
+	}
+	string s;
+	getline(IFfile_works, s);
+	count_works = atoi(s.c_str());
+
+	for (int i = 0; i < count_works; i++) {
+		getline(IFfile_works, s);
+		works[i].ID_Work = atoi(s.c_str());
+		getline(IFfile_works, s);
+		works[i].ID_Student = atoi(s.c_str());
+		getline(IFfile_works, s);
+		works[i].ID_Teacher = atoi(s.c_str());
+		getline(IFfile_works, s);
+		works[i].ID_Discipline = atoi(s.c_str());
+		getline(IFfile_works, s);
+		works[i].work_type = s;
+		getline(IFfile_works, s);
+		works[i].date_def = s;
+		getline(IFfile_works, s);
+		works[i].topic = s;
+	}
+
+}
+
 
 void menu_disciplines() {
 
@@ -352,12 +382,14 @@ void menu_students() {
 
 
 	if (a == 1) {
-
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE );
 		cout << "This list has entries: " << count_students<< endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		for (int i = 0; i < count_students; i++) {
 			newStudent[i].print();
 
 		}
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 		wait = _getch();
 	}
 
@@ -367,7 +399,9 @@ void menu_students() {
 		Ffile.open(file_way_students, ios_base::app);
 
 		if (Ffile.is_open() != 1) {
+			SetConsoleTextAttribute(h, FOREGROUND_RED);
 			cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 			wait = _getch();
 			a = 0;
 			return;
@@ -427,7 +461,9 @@ void menu_students() {
 					check3 = true;
 				}
 				else {
+					SetConsoleTextAttribute(h, 3);
 					cout << "A student with this contract number already exists, check the data and try again." << endl;
+					SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 				}
 			}
 		}
@@ -459,13 +495,17 @@ void menu_students() {
 			check_place_raiting = false;
 			cin >> place_raiting;
 			if (place_raiting < 1 || place_raiting > 999) {
+				SetConsoleTextAttribute(h, 3);
 				cout << "Wrong place rating,try again, place can be from 1 to 999" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 			}
 			else {
 				for (int i = 0; i < count_students; i++) {
 					if (newStudent[i].place_raiting == place_raiting) {
+						SetConsoleTextAttribute(h, 3);
 						cout << "There is already a student with this place in the rating, check the data and try again." << endl;
 						check_place_raiting = true;
+						SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 					}
 				}
 				if(!check_place_raiting)
@@ -479,7 +519,9 @@ void menu_students() {
 		while (!check6) {
 			cin >> ID_Group;
 			if (ID_Group < 2000 || ID_Group > 2099) {
+				SetConsoleTextAttribute(h, 3);
 				cout << "Wrong group ID! Group ID is only from 2000 to 2100" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 			}
 			else {
 				check6 = true;
@@ -510,7 +552,9 @@ void menu_students() {
 
 		}
 		else {
+			SetConsoleTextAttribute(h,3);
 			cout << "index more then all students count" << endl;
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 		}
 		wait = _getch();
 
@@ -529,7 +573,9 @@ void menu_students() {
 					check7 = true;
 				}
 			}
+			SetConsoleTextAttribute(h, FOREGROUND_BLUE);
 			cout << "There are not student with this ID" << endl;
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 		}
 	}
 
@@ -557,12 +603,18 @@ void menu_teachers() {
     IFfile.open(file_way_teachers);
 
 	if (IFfile.is_open() != 1) {
+		SetConsoleTextAttribute(h, FOREGROUND_RED);
 		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 		wait = _getch();
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 		a = 0;
 		return;
 	}
 
+	if (a == 1) {
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+	}
 
     string s;
 	getline(IFfile, s);
@@ -598,8 +650,10 @@ void menu_works() {
     IFfile_works.open(file_way_works);
 
 	if (IFfile_works.is_open() != 1) {
+		SetConsoleTextAttribute(h, FOREGROUND_RED);
 		cout << "Your list is not connected with this data base, check your way, or create new file" << endl;
 		wait = _getch();
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 		a = 0;
 		return;
 	}
@@ -607,34 +661,22 @@ void menu_works() {
     string s;
 	getline(IFfile_works, s);
 	int count_works = atoi(s.c_str());
-	work works[150] = {};
-	for (int i = 0; i < count_works; i++) {
-		getline(IFfile_works,s);
-		works[i].ID_Work = atoi(s.c_str());
-		getline(IFfile_works, s);
-		works[i].ID_Student = atoi(s.c_str());
-		getline(IFfile_works, s);
-		works[i].ID_Teacher = atoi(s.c_str());
-		getline(IFfile_works, s);
-		works[i].ID_Discipline = atoi(s.c_str());
-		getline(IFfile_works, s);
-		works[i].work_type = s;
-		getline(IFfile_works, s);
-		works[i].date_def = s;
-		getline(IFfile_works, s);
-		works[i].topic = s;
-	}
+	work works[300] = {};
+	get_file_works(works, count_works);
+	
 
 	student students[300];
 	int count_students = 0;
 	get_file_student(students,count_students);
 
 	if (a == 1) {
-
+		SetConsoleTextAttribute(h, 1);
 		cout << "This list has entries: " << count_works << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		for (int i = 0; i < count_works; i++) {
 			works[i].print();
 		}
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 		wait = _getch();
 	}
 
@@ -660,6 +702,13 @@ void menu_works() {
 		if (y_back == 8) {
 			a = 0;
 			return;
+		}
+
+		if (count_works != 0) {
+			work_id = works[count_works - 1].ID_Work + 1;
+		}
+		else {
+			work_id = 5001;
 		}
 		system("cls");
 		bool check_id = false;
