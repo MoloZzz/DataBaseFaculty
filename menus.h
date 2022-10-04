@@ -99,9 +99,9 @@ void get_file_disciplines(discipline disciplines[300], int& count_disciplines) {
 		disciplines[i].ID_Discipline = atoi(s.c_str());
 		getline(IFfile_disciplines, s);
 		disciplines[i].name = s;
-		getline(IFfile_disciplines, s);
-
 	}
+
+
 }
 
 void get_file_teachers(teacher teachers[300],int &count_teachers) {
@@ -182,12 +182,16 @@ void menu_disciplines() {
 	cout << "\t\tDisciplines`s actions(enter number):" << endl;
 	cout << "(1) Print" << endl;
 	cout << "(2) Add" << endl;
+	cout << "(3) Delete" << endl;
 	cout << "(0) Back" << endl;
+
 	ifstream IFfile;
 	IFfile.open(file_way_disciplines);
 	string s;
 	getline(IFfile, s);
 	int count_disciplines = atoi(s.c_str());
+
+
 	int wait = 0;
 	int a = 0;
 	cin >> a;
@@ -217,22 +221,185 @@ void menu_disciplines() {
 		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		wait = _getch();
 	}
+
 	if (a == 2) {
 		cout << "Enter name of new discipline" << endl;
-		string disc = "void";
+		int disc_id = 0;
+		string disc_name = "void";
 		bool check_disc = false;
-		while (check_disc) {
-			cin >> disc;
-			if (!check_numbers(disc) && disc.size() > 1 ) {
+		add_disc1:
+		while (!check_disc) {
+			getline(cin ,disc_name);
+			if (!check_numbers(disc_name) && disc_name.size() > 1 ) {
 				check_disc = true;
 			}
 			else {
 				cout << "Name cant contain numbers, try again(more than 2 symbols)" << endl;
+				goto add_disc1;
 			}
 		}
+		if (count_disciplines == 0) {
+			disc_id = 1001;
+		}
+		else {
+			disc_id = disciplines[count_disciplines - 1].ID_Discipline + 1;
+		}
 		fstream Ffile;
-		Ffile.open(file_way_disciplines);
+		Ffile.open(file_way_disciplines,ios_base::app);
+		Ffile << disc_id << endl;
+		Ffile << disc_name << endl;
+
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		cout << "Succsesfully added";
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		Ffile.close();
+		Ffile.open(file_way_disciplines);
+		Ffile << count_disciplines + 1;
+		Sleep(2000);
+	}
+
+	if (a == 3) {
+		cout << "Enter group ID that u want delete" << endl;
+		cout << "Variants:" << endl;
+		for (int i = 0; i < count_disciplines; i++) {
+			cout << disciplines[i].ID_Discipline << "  " << disciplines[i].name << endl;
+		}
+		string enter_rem_dis = "void";
+		bool check_id_to_rem = false;
+		int rem_disc = 0;
+		int rem_disc_index = 0;
+		poin_rem_dis1:
+		cin >> enter_rem_dis;
+		rem_disc = atoi(enter_rem_dis.c_str());
+		if (rem_disc == 0) {
+			SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			cout << "CANCELED" << endl;
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			return;
+		}
+
+		for (int i = 0; i < count_disciplines; i++) {
+			if (disciplines[i].ID_Discipline == rem_disc) {
+				check_id_to_rem = true;
+				rem_disc_index = i;
+			}
+		}
+
+		if (!check_id_to_rem) {
+			SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			cout << "There are not discipline with this ID,Try again or enter 0 to cancel" << endl;
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			goto poin_rem_dis1;
+		}
+
+		system("cls");
+
+		SetConsoleTextAttribute(h, 3);
+		cout << "Are u sure? Really want remuve this discipline?" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+		disciplines[rem_disc_index].print();
+
+		SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
+	point_disc_rem1:
+
+		cout << endl << "WARNING! if u remuve record u will never get it back!!!" << endl;
+		cout << endl;
+		cout << "!!!WARNING!!!" << endl;
+		cout << "If u delete this discipline,u also delete this teachers:" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+		ifstream IFfile_teachers;
+		IFfile.open(file_way_teachers);
+
+		getline(IFfile, s);
+		int count_teachers = atoi(s.c_str());
+		teacher teachers[300];
+		get_file_teachers(teachers, count_teachers);
+		int id_rem_teachers[50];
+		int y = 0;
+		for (int i = 0; i < count_teachers; i++) {
+			if (teachers[i].ID_discipline == rem_disc) {
+				teachers[i].print();
+				id_rem_teachers[y] = teachers[i].ID_teacher;
+				y++;
+			}
+		}
+		SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
+		cout << "!!!WARNING!!!" << endl;
+
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		SetConsoleTextAttribute(h, 13);
+
+		cout << "Enter YES to continue,or NO to cancel" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		bool check_yesno = false;
+		string enter_yesno = "void";
+		cin >> enter_yesno;
+
+		if (!check_yesno) {
+			if (enter_yesno == "YES" || enter_yesno == "yes" || enter_yesno == "no" || enter_yesno == "NO" || enter_yesno == "No" || enter_yesno == "Yes") {
+				if (enter_yesno == "no" || enter_yesno == "NO" || enter_yesno == "No") {
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+					cout << "CANCELED" << endl;
+					SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+					Sleep(2500);
+					return;
+				}
+				else {
+					enter_yesno = "yes";
+				}
+
+				check_yesno = true;
+
+			}
+			else {
+				if (!check_yesno) {
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE);
+					cout << "wrong enter,u can enter only YES or NO" << endl;
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+					goto point_disc_rem1;
+				}
+			}
+		}
+
+
+		ofstream OFfile_disciplines;
+		OFfile_disciplines.open(file_way_disciplines);
+		OFfile_disciplines << count_disciplines - 1 << endl;
+
+		for (int i = 0; i < count_disciplines; i++) {
+			if (disciplines[i].ID_Discipline != rem_disc) {
+				OFfile_disciplines << disciplines[i].ID_Discipline << endl;
+				OFfile_disciplines << disciplines[i].name << endl;
+			}
+			else {
+				cout << "delted:" << endl;
+				cout << disciplines[i].ID_Discipline << endl;
+				cout<< disciplines[i].name << endl;
+			}
+		}
+
+
+		ofstream OFfile_teachers;
+		OFfile_teachers.open(file_way_teachers);
+		OFfile_teachers << count_teachers - y <<endl;
+
+		for (int i = 0; i < count_teachers; i++) {
+			if (teachers[i].ID_discipline != rem_disc) {
+				OFfile_teachers << teachers[i].ID_teacher << endl;
+				OFfile_teachers << teachers[i].name << endl;
+				OFfile_teachers << teachers[i].ID_discipline << endl;
+				OFfile_teachers << teachers[i].graduation << endl;
+			}
+			else {
+				cout << "deleted:" << endl;
+				cout << teachers[i].ID_teacher << endl;
+				cout << teachers[i].name << endl;
+				cout << teachers[i].ID_discipline << endl;
+				cout << teachers[i].graduation << endl;
+			}
+		}
 
 	}
 
@@ -801,7 +968,6 @@ void menu_students() {
 			}
 
 			system("cls");
-			newStudent[index_to_rem].print();
 			SetConsoleTextAttribute(h, 3);
 			cout << "Are u sure? Really want remuve this student?" << endl;
 			SetConsoleTextAttribute(h, FOREGROUND_BLUE|FOREGROUND_INTENSITY);
@@ -938,6 +1104,7 @@ void menu_students() {
 			SetConsoleTextAttribute(h, 14);
 			cout << "Succsefull deleted " << endl;
 			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			Sleep(2500);
 			
 		}
 
@@ -945,6 +1112,8 @@ void menu_students() {
 
 
 	}
+
+
 
 	menu_students();
 }

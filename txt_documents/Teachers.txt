@@ -1,4 +1,4 @@
-13
+12
 4001
 Evgeniy Ivanov
 1001
@@ -35,10 +35,6 @@ proffesor
 Ivan Harchenko
 1003
 proffesor
-4010
-Irina Rozora
-1004
-dosent
 4011
 Rinvay Harly
 1003
