@@ -1,4 +1,4 @@
-10
+13
 4001
 Evgeniy Ivanov
 1001
@@ -39,3 +39,15 @@ proffesor
 Irina Rozora
 1004
 dosent
+4011
+Rinvay Harly
+1003
+assistent
+4012
+Bob Gril
+1003
+proffesor
+4013
+Filer Slain
+1003
+asspirant

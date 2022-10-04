@@ -3,6 +3,7 @@
 #include<iostream>
 #include<fstream>
 #include<cstring>
+#include"adminmenu.h"
 
 using namespace std;
 
@@ -159,7 +160,6 @@ void get_file_groups(group groups[300],int &count_groups) {
 		groups[i].students_amount = atoi(s.c_str());
 	}
 }
-
 
 bool check_numbers(string s) {
 	int k = 0, i = 0;
@@ -437,17 +437,41 @@ void menu_groups() {
 		Ffile.open(file_way_groups);
 		Ffile << count +1;
 	}
+
+	if (a == 3) {
+
+		cout << "Enter id of group that u finding" << endl;
+		string entered_id_a3;
+		cin >> entered_id_a3;
+		bool check_id_a3 = false;
+		for (int i = 0; i < count; i++) {
+			if (groups[i].ID_Group == atoi(entered_id_a3.c_str())) {
+				groups[i].print();
+				check_id_a3 = true;
+		    }
+		}
+		if (!check_id_a3) {
+			cout << "Wrong ID" << endl;
+		}
+		wait = _getch();
+	}
 	
 	if (a == 4) {
 		cout << "Enter id of group that u finding"<< endl;
-		int entered_id = 0;
-		cin >> entered_id;
+		string entered_id_a4;
+		cin >> entered_id_a4;
+		bool check_id_a4 = false;
 		cout << "This group students: " << endl;
 		for (int i = 0; i < count_students; i++) {
-			if (newStudent[i].ID_Group == entered_id) {
+			if (newStudent[i].ID_Group == atoi(entered_id_a4.c_str())){
 				newStudent[i].print();
+				check_id_a4 = true;
 			}
 		}
+		if (!check_id_a4) {
+			cout << "There is not group with this ID" << endl;
+		}
+
 		wait = _getch();
 	}
 
@@ -715,15 +739,18 @@ void menu_students() {
 		if (!check7) {
 			cin >> stud_id;
 			for (int i = 0; i < count_students; i++) {
-				if (newStudent[i].ID_Student == atoi(stud_id.c_str())) {
+				if (newStudent[i].ID_Student == atoi(stud_id.c_str()) && atoi(stud_id.c_str()) != NULL) {
 					newStudent[i].print();
 					wait = _getch();
 					check7 = true;
 				}
 			}
-			SetConsoleTextAttribute(h, FOREGROUND_BLUE);
-			cout << "There are not student with this ID" << endl;
-			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			if (!check7) {
+				SetConsoleTextAttribute(h, FOREGROUND_BLUE);
+				cout << "There are not student with this ID" << endl;
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+				wait = _getch();
+			}
 		}
 	}
 
@@ -835,7 +862,7 @@ void menu_teachers() {
 
 			cin >> first_name;
 
-			if (( first_name.size() > 3 && first_name.size() < 15 ) && !check_numbers(first_name)) {
+			if (( first_name.size() > 1 && first_name.size() < 15 ) && !check_numbers(first_name)) {
 				SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 				cout << "Successfull added name" << endl;
 				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
@@ -859,7 +886,7 @@ void menu_teachers() {
 
 			cin >> last_name;
 
-			if ((last_name.size() > 3 && last_name.size() < 15) && !check_numbers(last_name)) {
+			if ((last_name.size() > 1 && last_name.size() < 15) && !check_numbers(last_name)) {
 				SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 				cout << "Successfull added surname" << endl;
 				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
@@ -919,7 +946,7 @@ void menu_teachers() {
 				graduation = "proffesor";
 			if (grad == 3)
 				graduation = "assistent";
-			if (grad == 3)
+			if (grad == 4)
 				graduation = "asspirant";
 		}
 		else {
@@ -950,6 +977,25 @@ void menu_teachers() {
 		Sleep(2000);
 	}
 	
+	if (a == 3) {
+		cout << "Enter ID" << endl;
+		string enter_id;
+		
+		bool is_find = false;
+		while (!is_find) {
+			cin >> enter_id;
+			for (int i = 0; i < count_teachers; i++) {
+				if (teachers[i].ID_teacher == atoi(enter_id.c_str())) {
+					teachers[i].print();
+					is_find = true;
+				}
+			}
+			if (!is_find) {
+				cout << "Wrong enter(enter from 4001 to 4999)" << endl;
+			}
+		}
+	}
+	wait = _getch();
 	menu_teachers();
 }
 
@@ -1090,7 +1136,6 @@ void menu_works() {
 	}
 	menu_works();
 }
-
 
 
 void print_all_id() {
@@ -1250,7 +1295,20 @@ void menu_errors() {
 
 
 	int wait = 0;
-	wait = _getch();
 
+	wait = _getch();
+	
+	if (wait == 117) {
+		system("cls");
+		cout << "Enter password: " << endl;
+		string password = {};
+		cin >> password;
+		if (password == "trewor") {
+			admin();
+		}
+		else {
+			return;
+		}
+	}
 
 }
