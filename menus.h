@@ -193,8 +193,11 @@ void menu_disciplines() {
 
 
 	int wait = 0;
+	string enter_a = "void";
 	int a = 0;
-	cin >> a;
+	cin >> enter_a;
+
+	a = atoi(enter_a.c_str());
 
 	if (a == 0) {
 		return;
@@ -417,8 +420,11 @@ void menu_groups() {
 
 	int wait = 0;
 
+	string enter_a = "void";
 	int a = 0;
-	cin >> a;
+	cin >> enter_a;
+
+	a = atoi(enter_a.c_str());
 	if (a == 0) {
 		return;
 	}
@@ -668,8 +674,11 @@ void menu_students() {
 
 	int wait = 0;
 
+	string enter_a = "void";
 	int a = 0;
-	cin >> a;
+	cin >> enter_a;
+
+	a = atoi(enter_a.c_str());
 
 	if (a == 0) {
 		return;
@@ -1130,8 +1139,11 @@ void menu_teachers() {
 
 	int wait = 0;
 
+	string enter_a = "void";
 	int a = 0;
-	cin >> a;
+	cin >> enter_a;
+
+	a = atoi(enter_a.c_str());
 	if (a == 0) {
 		return;
 	}
@@ -1404,8 +1416,11 @@ void menu_works() {
 	cout << "(0) Back" << endl;
 	int wait = 0;
 
+	string enter_a = "void";
 	int a = 0;
-	cin >> a;
+	cin >> enter_a;
+
+	a = atoi(enter_a.c_str());
 
 	if (a == 0) {
 		return;

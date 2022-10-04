@@ -1,10 +1,4 @@
-24
-3001
-Yevchyk Oleksii
-4101
-Full
-14
-2001
+20
 3005
 Zinchenco Ivan
 4275
@@ -83,12 +77,6 @@ Julian Gus
 Half
 32
 2007
-3017
-Jonatan Swift
-4236
-Full
-31
-2009
 3018
 Yin Grion
 4223
@@ -101,12 +89,6 @@ Han Hu
 Half
 29
 2010
-3020
-Ura Torin
-4233
-Half
-35
-2006
 3021
 Danya Derevianko
 4254
@@ -137,12 +119,6 @@ Ura Grodish
 Half
 11
 2003
-3028
-Rian Jul1
-4265
-Full
-15
-2014
 -858993460
 
 -858993460
