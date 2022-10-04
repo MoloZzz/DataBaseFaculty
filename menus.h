@@ -1137,7 +1137,6 @@ void menu_works() {
 	menu_works();
 }
 
-
 void print_all_id() {
 	system("cls");
 	SetConsoleTextAttribute(h, FOREGROUND_BLUE);
@@ -1295,9 +1294,8 @@ void menu_errors() {
 
 
 	int wait = 0;
-
 	wait = _getch();
-	
+
 	if (wait == 117) {
 		system("cls");
 		cout << "Enter password: " << endl;
