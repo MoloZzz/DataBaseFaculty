@@ -262,6 +262,12 @@ void menu_disciplines() {
 	}
 
 	if (a == 3) {
+		if (count_disciplines == 0) {
+			cout << "There are not any disciplines in this base, add them!" << endl;
+			cout << "Press any key to back main menu" << endl;
+			wait = getch();
+			return;
+		}
 		cout << "Enter group ID that u want delete" << endl;
 		cout << "Variants:" << endl;
 		for (int i = 0; i < count_disciplines; i++) {
@@ -468,20 +474,7 @@ void menu_groups() {
 	int count_students = atoi(s.c_str());
 
 	student newStudent[300];
-	for (int i = 0; i < count_students; i++) {
-		getline(IFfileStudents, s);
-		newStudent[i].ID_Student = atoi(s.c_str());
-		getline(IFfileStudents, s);
-		newStudent[i].name = s;
-		getline(IFfileStudents, s);
-		newStudent[i].contract_number = atoi(s.c_str());
-		getline(IFfileStudents, s);
-		newStudent[i].studing_type = s;
-		getline(IFfileStudents, s);
-		newStudent[i].place_raiting = atoi(s.c_str());
-		getline(IFfileStudents, s);
-		newStudent[i].ID_Group = atoi(s.c_str());
-	}
+	get_file_students(newStudent, count_students);
 
 	if (a == 1) {
 		SetConsoleTextAttribute(h, FOREGROUND_BLUE);
@@ -552,6 +545,7 @@ void menu_groups() {
 		cin >> numb;
 			
 		string snumb = to_string(numb);
+
 		string group_name_numb = group_name + "-" + snumb;
 
         cout << "\tChoose head student of this group: " << endl;
@@ -570,10 +564,23 @@ void menu_groups() {
 
 		cout << "Enter ID head student of this group" << endl;
 		int entered_id = 0;
+		string check_entered_id = "void";
 		bool check8 = false;
 		int checker = 0;
+		if (y == 0) {
+			cout << "There are not any students with group ID: " << id_group << endl;
+			cout << "Press any key to back main menu" << endl;
+			wait = _getch();
+			return;
+
+		}
 		while (check8 == false) {
-			cin >> entered_id;
+			cin >> check_entered_id;
+			entered_id = atoi(check_entered_id.c_str());
+			if (atoi(check_entered_id.c_str()) == 0) {
+				return;
+			}
+
 			for (int i = 0; i < y; i++) {
 				if (stud_ids[i] == entered_id) {
 					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
@@ -585,7 +592,7 @@ void menu_groups() {
 			}
 			if (checker != 1) {
 				SetConsoleTextAttribute(h, FOREGROUND_RED);
-				cout << "Error,you entered wrong ID,try again" << endl;
+				cout << "Error,you entered wrong ID,try again(or enter 0 to back main menu)" << endl;
 				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 			}
 		}
@@ -751,8 +758,12 @@ void menu_students() {
 		int place_raiting;
 		int ID_Group = 0;
 
-		student_ID = newStudent[count_students - 1].ID_Student;
-
+		if (count_students == 0) {
+			student_ID = 3001;
+		}
+		else {
+			student_ID = newStudent[count_students - 1].ID_Student;
+		}
 		cout << "Enter student name(ONLY NAME,without surname): " << endl;
 		bool check1 = false;
 		while (!check1) {
@@ -786,9 +797,12 @@ void menu_students() {
 		cout << "Enter contract(4200-4999): " << endl;
 		bool check3 = false;
 		bool check_contrack_number = false;
+		string enter_contract = "void";
 		while (!check3) {
 			check_contrack_number = false;
-			cin >> contract_number;
+			cin >> enter_contract;
+			contract_number = atoi(enter_contract.c_str());
+
 			if (contract_number < 4200 || contract_number > 4999) {
 				SetConsoleTextAttribute(h, FOREGROUND_RED);
 				cout << "Wrong contract number, try again! contract number is 4200-4999" << endl;
@@ -835,9 +849,11 @@ void menu_students() {
 
 		bool check_place_raiting1 = false;
 		bool check_place_raiting = false;
+		string enter_place_raiting = "void";
 		while (!check_place_raiting1) {
 			check_place_raiting = false;
-			cin >> place_raiting;
+			cin >> enter_place_raiting;
+			place_raiting = atoi(enter_place_raiting.c_str());
 			if (place_raiting < 1 || place_raiting > 999) {
 				SetConsoleTextAttribute(h, 3);
 				cout << "Wrong place rating,try again, place can be from 1 to 999" << endl;
@@ -860,8 +876,10 @@ void menu_students() {
 
 		cout << "Enter group ID(2001-2099) " << endl;
 		bool check6 = false;
+		string enter_group = "void";
 		while (!check6) {
-			cin >> ID_Group;
+			cin >> enter_group;
+			ID_Group = atoi(enter_group.c_str());
 			if (ID_Group < 2000 || ID_Group > 2099) {
 				SetConsoleTextAttribute(h, 3);
 				cout << "Wrong group ID! Group ID is only from 2000 to 2100" << endl;
@@ -888,6 +906,14 @@ void menu_students() {
 	}
 
 	if (a == 3) {
+
+		if (count_students == 0) {
+			cout << "There are not any students in this base, add them!" << endl;
+			cout << "Press any key to back main menu" << endl;
+			wait = _getch();
+			return;
+		}
+
 		cout << "enter index: " << endl;
 		int index;
 		cin >> index;
@@ -905,6 +931,14 @@ void menu_students() {
 	}
 
 	if (a == 4) {
+
+		if (count_students == 0) {
+			cout << "There are not any students in this base, add them!" << endl;
+			cout << "Press any key to back main menu" << endl;
+			wait = _getch();
+			return;
+		}
+
 		cout << "Enter ID of student that u want to find" << endl;
 		string stud_id;
 		bool check7 = false;
@@ -921,12 +955,21 @@ void menu_students() {
 				SetConsoleTextAttribute(h, FOREGROUND_BLUE);
 				cout << "There are not student with this ID" << endl;
 				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+				cout << "Press any key to back main menu" << endl;
 				wait = _getch();
 			}
 		}
 	}
 
 	if (a == 5) {
+
+		if (count_students == 0) {
+			cout << "There are not any students in this base, add them!" << endl;
+			cout << "Press any key to back main menu" << endl;
+			wait = _getch();
+			return;
+		}
+
 		cout << "Choose whitch student u want remuve" << endl;
 		cout << "1) Remuve by ID" << endl;
 		cout << "2) Remuve by list number(1,2,3..)" << endl;

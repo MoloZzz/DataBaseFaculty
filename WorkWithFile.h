@@ -54,6 +54,7 @@ void menu() {
         cout << "Press any key to start" << std::endl;
         timer = _getch();
     }
+
     system("CLS");
     SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
     setlocale(0, "ukr");
