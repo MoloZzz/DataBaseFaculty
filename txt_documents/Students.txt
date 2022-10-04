@@ -1,7 +1,7 @@
-26
+24
 3001
 Yevchyk Oleksii
-41001
+4101
 Full
 14
 2001
@@ -113,12 +113,6 @@ Danya Derevianko
 Half
 26
 2005
-3022
-test1 test2
-4200
-Full
-100
-2001
 3023
 Yin Hu
 4235
@@ -131,12 +125,6 @@ Tasia Himich
 Half
 13
 2011
-3025
-Grisha Fisher
-4200
-Half
-2
-2010
 3026
 Roman Frolov
 4201
@@ -155,3 +143,9 @@ Rian Jul1
 Full
 15
 2014
+-858993460
+
+-858993460
+
+-858993460
+-858993460

@@ -496,7 +496,7 @@ void menu_students() {
 	cout << "(2) Add" << endl;
 	cout << "(3) Print by index(list number)" << endl;
 	cout << "(4) Print by ID" << endl;
-	cout << "(5) Delete by ID" << endl;
+	cout << "(5) Delete" << endl;
 	cout << "(0) Back" << endl;
 
 	int wait = 0;
@@ -853,10 +853,93 @@ void menu_students() {
 			SetConsoleTextAttribute(h, 14);
 			cout << "Succsefull deleted " << endl;
 			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			Sleep(2500);
 
 		}
 
-		
+		if (menu_points_a5 == 2) {
+			cout << "Enter list number of student that u want remuve" << endl;
+			cout << "Variants:" << endl;
+			for (int i = 0; i < count_students; i++) {
+				cout << i + 1 << ")";
+				cout << newStudent[i].ID_Student << endl;
+			}
+			string rem_stud_numb = "Void";
+			bool check_rem_numb = false;
+			int index_to_rem = -1;
+
+		point2a2:
+			cin >> rem_stud_numb;
+			if (atoi(rem_stud_numb.c_str()) >= 1 && atoi(rem_stud_numb.c_str()) <= count_students + 1) {
+				index_to_rem = atoi(rem_stud_numb.c_str()) - 1;
+				check_rem_numb = true;
+			}
+			if (!check_rem_numb) {
+				SetConsoleTextAttribute(h, FOREGROUND_RED);
+				cout << "Wrong ID,press any buttoms to try again or BACKSPACE to back main menu" << endl;
+				wait = _getch();
+				if (wait == 8) {
+					return;
+				}
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+				goto point2a2;
+			}
+
+			system("cls");
+			newStudent[index_to_rem].print();
+			SetConsoleTextAttribute(h, 3);
+			cout << "Are u sure? Really want remuve this student?" << endl;
+			SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			newStudent[index_to_rem].print();
+			SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
+		point3a2:
+			cout << endl << "WARNING! if u remuve record u will never get it back!!!" << endl;
+			cout << "Enter YES to continue,or NO to cancel" << endl;
+			SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			bool check_yesno = false;
+			string enter_yesno = "void";
+			cin >> enter_yesno;
+			if (!check_yesno) {
+				if (enter_yesno == "YES" || enter_yesno == "yes" || enter_yesno == "no" || enter_yesno == "NO" || enter_yesno == "No" || enter_yesno == "Yes") {
+					if (enter_yesno == "no" || enter_yesno == "NO" || enter_yesno == "No") {
+						cout << "CANCELED" << endl;
+						Sleep(2500);
+						return;
+					}
+					else {
+						enter_yesno = "yes";
+					}
+
+					check_yesno = true;
+
+				}
+				else {
+					if (!check_yesno) {
+						cout << "wrong enter,u can enter only YES or NO" << endl;
+						goto point3a2;
+					}
+				}
+			}
+
+			count_students = count_students - 1;
+			ofstream OFfile;
+			OFfile.open(file_way_students);
+			OFfile << count_students << endl;
+			for (int i = 0; i <= count_students + 1; i++) {
+				if (i != index_to_rem) {
+					OFfile << newStudent[i].ID_Student << endl;
+					OFfile << newStudent[i].name << endl;
+					OFfile << newStudent[i].contract_number << endl;
+					OFfile << newStudent[i].studing_type << endl;
+					OFfile << newStudent[i].place_raiting << endl;
+					OFfile << newStudent[i].ID_Group << endl;
+				}
+			}
+			SetConsoleTextAttribute(h, 14);
+			cout << "Succsefull deleted " << endl;
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			
+		}
 
 
 
