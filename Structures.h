@@ -53,18 +53,10 @@ struct student {
 struct discipline {
 	ID ID_Discipline;
 	std::string name;
-	ID ID_teacher;
-	std::string date_exam;
-	int mark;
-	std::string obligation;
 	void print() {
 
 		std::cout << "ID discipline: " << ID_Discipline << std::endl;
 		std::cout << "Discipline name: " << name << std::endl;
-		std::cout << "Teacher ID: " << ID_teacher << std::endl;
-		std::cout << "Date exam: " << date_exam << std::endl;
-		std::cout << "Mark: " << mark << std::endl;
-		std::cout << "Obligation: " << obligation << std::endl;
 		std::cout << std::endl;
 	}
 

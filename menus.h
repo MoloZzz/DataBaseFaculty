@@ -14,7 +14,7 @@ void d(short x, short y)
 	SetConsoleCursorPosition(h, { x,y });
 }
 
-	string file_way = "c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\";
+	string file_way = "c:\\Users\\Yura\\source\\repos\\DataBaseFaculty\\txt_documents\\";
 	string file_way_students = file_way + "Students.txt";
 	string file_way_teachers = file_way + "Teachers.txt";
 	string file_way_groups = file_way + "Groups.txt";
@@ -100,13 +100,6 @@ void get_file_disciplines(discipline disciplines[300], int& count_disciplines) {
 		getline(IFfile_disciplines, s);
 		disciplines[i].name = s;
 		getline(IFfile_disciplines, s);
-		disciplines[i].ID_teacher = atoi(s.c_str());
-		getline(IFfile_disciplines, s);
-		disciplines[i].date_exam = s;
-		getline(IFfile_disciplines, s);
-		disciplines[i].mark = atoi(s.c_str());
-		getline(IFfile_disciplines, s);
-		disciplines[i].obligation = s;
 
 	}
 }
@@ -187,9 +180,9 @@ void menu_disciplines() {
 
 	system("cls");
 	cout << "\t\tDisciplines`s actions(enter number):" << endl;
-	cout << "(1) print" << endl;
-	cout << "(2) add" << endl;
-	cout << "(0) back" << endl;
+	cout << "(1) Print" << endl;
+	cout << "(2) Add" << endl;
+	cout << "(0) Back" << endl;
 	ifstream IFfile;
 	IFfile.open(file_way_disciplines);
 	string s;
@@ -223,6 +216,24 @@ void menu_disciplines() {
 		}
 		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		wait = _getch();
+	}
+	if (a == 2) {
+		cout << "Enter name of new discipline" << endl;
+		string disc = "void";
+		bool check_disc = false;
+		while (check_disc) {
+			cin >> disc;
+			if (!check_numbers(disc) && disc.size() > 1 ) {
+				check_disc = true;
+			}
+			else {
+				cout << "Name cant contain numbers, try again(more than 2 symbols)" << endl;
+			}
+		}
+		fstream Ffile;
+		Ffile.open(file_way_disciplines);
+		cout << "Succsesfully added";
+
 	}
 
 	menu_disciplines();
@@ -515,21 +526,6 @@ void menu_students() {
 	int count_students = atoi(s.c_str());
 	student newStudent[300];
 
-	//for (int i = 0; i < count; i++) {
-	//	getline(IFfile, s);
-	//	newStudent[i].ID_Student = atoi(s.c_str());
-	//	getline(IFfile, s);
-	//	newStudent[i].name = s;
-	//	getline(IFfile, s);
-	//	newStudent[i].contract_number = atoi(s.c_str());
-	//	getline(IFfile, s);
-	//	newStudent[i].studing_type = s;
-	//	getline(IFfile, s);
-	//	newStudent[i].place_raiting = atoi(s.c_str());
-	//	getline(IFfile, s);
-	//	newStudent[i].ID_Group = atoi(s.c_str());
-	//}
-
 	get_file_students(newStudent, count_students);
 
 
@@ -755,22 +751,115 @@ void menu_students() {
 	}
 
 	if (a == 5) {
-		int index_del = 0;
-		fstream Ffile_test;
-		ifstream file;
-		Ffile_test.open("c:\\Users\\Yura\\source\\repos\\DataBaseFaculty\\txt_documents\\TEST.txt");
-		file.open("c:\\Users\\Yura\\source\\repos\\DataBaseFaculty\\txt_documents\\TEST.txt");
+		cout << "Choose whitch student u want remuve" << endl;
+		cout << "1) Remuve by ID" << endl;
+		cout << "2) Remuve by list number(1,2,3..)" << endl;
+		cout << "0) Back main menu " << endl;
+		int menu_points_a5 = 0;
+		string check_int = "void";
+		point1:
+		cin >> check_int;
+		if (atoi(check_int.c_str()) == NULL && atoi(check_int.c_str()) < 0  && atoi(check_int.c_str()) > 2) {
+			cout << "Wrong enter,try again" << endl;
+			goto point1;
+		}
+		menu_points_a5 = atoi(check_int.c_str());
+		
+		if (menu_points_a5 == 0) {
+			return;
+		}
+
+		if (menu_points_a5 == 1) {
+			cout << "Enter student ID that u want remuve" << endl;
+			cout << "Variants:" << endl;
+			for (int i = 0; i < count_students; i++) {
+				cout << i + 1 << ")";
+				cout << newStudent[i].ID_Student << endl;
+			}
+
+			int rem_stud_id = 0;
+			bool check_rem_id = false;
+			int index_to_rem = -1;
+
+			point2:
+			cin >> rem_stud_id;
+			for (int i = 0; i < count_students; i++) {
+				if (newStudent[i].ID_Student == rem_stud_id) {
+					check_rem_id = true;
+					index_to_rem = i;
+				}
+			}
+			if (!check_rem_id) {
+				SetConsoleTextAttribute(h, FOREGROUND_RED);
+				cout << "Wrong ID,press any buttoms to try again or BACKSPACE to back main menu" << endl;
+				wait = _getch();
+				if (wait == 8) {
+					return;
+				}
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+				goto point2;
+			}
+
+			system("cls");
+			newStudent[index_to_rem].print();
+			SetConsoleTextAttribute(h, 3);
+			cout << "Are u sure? Really want remuve this student?" << endl;
+			SetConsoleTextAttribute(h, FOREGROUND_BLUE|FOREGROUND_INTENSITY);
+			newStudent[index_to_rem].print();
+			SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
+			point3:
+			cout << endl << "WARNING! if u remuve record u will never get it back!!!" << endl;
+			cout << "Enter YES to continue,or NO to cancel" << endl;
+			SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			bool check_yesno = false;
+			string enter_yesno = "void";
+			cin >> enter_yesno;
+			if (!check_yesno) {
+				if (enter_yesno == "YES" || enter_yesno == "yes" || enter_yesno == "no" || enter_yesno == "NO" || enter_yesno == "No" || enter_yesno == "Yes") {
+					if (enter_yesno == "no" || enter_yesno == "NO" || enter_yesno == "No") {
+						cout << "CANCELED" << endl;
+						Sleep(2500);
+						return;
+					}
+					else {
+						enter_yesno = "yes";
+					}
+					
+					check_yesno = true;
+
+				}
+				else {
+					if (!check_yesno) {
+						cout << "wrong enter,u can enter only YES or NO" << endl;
+						goto point3;
+					}
+				}
+			}
+
+			count_students = count_students - 1;
+			ofstream OFfile;
+			OFfile.open(file_way_students);
+			OFfile << count_students << endl;
+			for (int i = 0; i <= count_students + 1; i++) {
+				if (i != index_to_rem) {
+					OFfile << newStudent[i].ID_Student << endl;
+					OFfile << newStudent[i].name << endl;
+					OFfile << newStudent[i].contract_number << endl;
+					OFfile << newStudent[i].studing_type << endl;
+					OFfile << newStudent[i].place_raiting << endl;
+					OFfile << newStudent[i].ID_Group << endl;
+				}
+			}
+			SetConsoleTextAttribute(h, 14);
+			cout << "Succsefull deleted " << endl;
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+
+		}
 
 		
 
-			file.seekg(0, ios_base::end);
-		    cout << "Ðàçìåð ôàéëà (â áàéòàõ): " << file.tellg();
-			Sleep(1000);
-			system("cls");
-			d(50, 12);
-			cout << "ÊÎÌÀÍÄÀ Â ÐÎÇÐÎÁÖI" << endl;
 
-		Sleep(2000);
+
 
 	}
 
