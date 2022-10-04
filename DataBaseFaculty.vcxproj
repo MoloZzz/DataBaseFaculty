@@ -130,6 +130,7 @@
     <ClCompile Include="DataBaseFaculty.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="adminmenu.h" />
     <ClInclude Include="menus.h" />
     <ClInclude Include="Structures.h" />
     <ClInclude Include="WorkWithFile.h" />

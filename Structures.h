@@ -9,7 +9,6 @@ struct date {
 	int year;
 };
 
-
 struct full_name {
 	std::string name;
 	std::string surname;
@@ -19,25 +18,19 @@ enum graduations {
 	dosent,
 	proffesor,
 	asistent
-
 };
 
 enum work_types {
 	kyrsova,
 	diplomna,
 	doctorskaya
-
 };
 
 enum obligations {
 	blok_IS,
 	bloc_PI,
 	bloc_VP
-
 };
-
-
-
 
 struct student {
 	ID ID_Student;
@@ -60,10 +53,13 @@ struct student {
 struct discipline {
 	ID ID_Discipline;
 	std::string name;
-	ID ID_teacher;
-	date date_exam;
-	int mark;
-	obligations obligation;
+	void print() {
+
+		std::cout << "ID discipline: " << ID_Discipline << std::endl;
+		std::cout << "Discipline name: " << name << std::endl;
+		std::cout << std::endl;
+	}
+
 };
 
 struct group {
@@ -73,29 +69,51 @@ struct group {
 	int students_amount;
 
 	void print() {
-		std::cout << "ID Group: "<< ID_Group << std::endl;
+
+		std::cout << "ID Group: " << ID_Group << std::endl;
 		std::cout << "Group name: " << name << std::endl;
 		std::cout << "Head student: " << head_student << std::endl;
 		std::cout << "Students amount: " << students_amount << std::endl;
 
-}
+    }
 
 };
 
 struct work {
 	ID ID_Work;
 	ID ID_Student;
-	ID ID_teacher;
-	work_types work_type;
+	ID ID_Teacher;
 	ID ID_Discipline;
-	date date_def;
+	std::string work_type;
+	std::string date_def;
 	std::string topic;
+
+
+	void print() {
+		std::cout << "Work ID: " << ID_Work << std::endl;
+		std::cout << "Student ID: " << ID_Student << std::endl;
+		std::cout << "Teacher ID: " << ID_Teacher << std::endl;
+		std::cout << "Discipline ID: " << ID_Discipline << std::endl;
+		std::cout << "Work type: " << work_type << std::endl;
+		std::cout << "Date of defending: " << date_def << std::endl;
+		std::cout << "Topic: " << topic << std::endl;
+	}
 };
 
 
 struct teacher {
 	ID ID_teacher;
-	full_name name;
-	ID ID_Discipline;
-	graduations graduation;
+	std::string name;
+	ID ID_discipline;
+	std::string graduation;
+
+	void print() {
+		std::cout << "Teacher ID: " << ID_teacher << std::endl;
+		std::cout << "Name: " << name << std::endl;
+		std::cout << "ID discipline: " << ID_discipline << std::endl;
+		std::cout << "Graduation: " << graduation << std::endl;
+		std::cout << std::endl;
+	}
 };
+
+

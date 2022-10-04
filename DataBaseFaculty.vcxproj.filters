@@ -29,5 +29,8 @@
     <ClInclude Include="menus.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="adminmenu.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

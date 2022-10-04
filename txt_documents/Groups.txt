@@ -1,13 +1,33 @@
-3
-2000
-PI-12
-Dima Kovalev
-14
+8
 2001
-KC-10
-
-16
+PI-10
+Yevchyk Oleksii
+14
 2002
-UI-11
-
-11
+TR-11
+Grisha Dilov
+45
+2003
+KS-13
+Dima Koval
+21
+2004
+KC-11
+Vitaliy Kalina
+19
+2005
+PI-10
+Danya Derevianko
+10
+2006
+UI-23
+Yin Grion
+15
+2007
+TU-14
+Jonatan Swift
+15
+2008
+RI-14
+Ilia Kovalev
+25
