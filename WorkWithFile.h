@@ -56,10 +56,9 @@ void menu() {
     }
     system("CLS");
     SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
-    cout << "\n \t \t \tGitHub - MoloZzz\t \t\t \t\tOLeksii Yevchyk`s work" << endl;
     setlocale(0, "ukr");
     ConsoleCursorVisible(false, 100);
-    string T[] = {"Actions with students","Actions with disciplines","Actions with teachers","Actions with groups","Actions with works","Files and errors menu","Exit"};
+    string T[] = {"Actions with students","Actions with disciplines","Actions with teachers","Actions with groups","Actions with works","Print all IDs","Files and errors menu","Exit"};
 
     char aT = 0;
     char c;
@@ -144,7 +143,17 @@ void menu() {
                 system("CLS");
                 break;
             }
-            case 5: 
+            case 5:
+            {
+                system("CLS");
+                d(x, y);
+                SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+                print_all_id();
+
+                system("CLS");
+                break;
+            }
+            case 6: 
             {
                 system("CLS");
                 d(x, y);
@@ -154,7 +163,7 @@ void menu() {
                 system("CLS");
                 break;
             }
-            case 6:
+            case 7:
             {
                 exit(0);
                 break;

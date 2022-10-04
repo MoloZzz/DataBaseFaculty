@@ -13,12 +13,14 @@ void d(short x, short y)
 	SetConsoleCursorPosition(h, { x,y });
 }
 
-	string file_way = "c:\\Users\\Yura\\source\\repos\\DataBaseFaculty\\txt_documents\\";
+	string file_way = "c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\";
 	string file_way_students = file_way + "Students.txt";
 	string file_way_teachers = file_way + "Teachers.txt";
 	string file_way_groups = file_way + "Groups.txt";
 	string file_way_disciplines = file_way + "Disciplines.txt";
 	string file_way_works = file_way + "Works.txt";
+	string file_way_ALL_IDs = file_way + "ALL_IDs.txt";
+	string file_way_TeachersInfo = file_way + "TeachersInfo.txt";
 
 	
 
@@ -158,6 +160,7 @@ void get_file_groups(group groups[300],int &count_groups) {
 	}
 }
 
+
 bool check_numbers(string s) {
 	int k = 0, i = 0;
 	while (s[i])
@@ -172,7 +175,13 @@ bool check_numbers(string s) {
 	if (k == 0) return 0;
 }
 
-
+int get_count(string file_way) {
+	string s;
+	ifstream IFfile;
+	IFfile.open(file_way_works);
+	getline(IFfile, s);
+	return atoi(s.c_str());
+}
 
 void menu_disciplines() {
 
@@ -1080,6 +1089,113 @@ void menu_works() {
 		
 	}
 	menu_works();
+}
+
+
+
+void print_all_id() {
+	system("cls");
+	SetConsoleTextAttribute(h, FOREGROUND_BLUE);
+	int wait = 0;
+
+	work works[300];
+	student students[300];
+	discipline disciplines[300];
+	teacher teachers[300];
+	group groups[300];
+	
+	int count_works = get_count(file_way_works);
+	int count_students = get_count(file_way_students);
+	int count_disciplines = get_count(file_way_disciplines);
+	int count_teachers = get_count(file_way_teachers);
+	int count_groups = get_count(file_way_groups);
+
+
+
+	get_file_works(works, count_works);
+	get_file_students(students, count_students);
+	get_file_disciplines(disciplines, count_disciplines);
+	get_file_teachers(teachers, count_teachers);
+	get_file_groups(groups, count_groups);
+
+	int count_all = count_works + count_students + count_disciplines + count_teachers + count_groups;
+
+	SetConsoleTextAttribute(h, 14);
+	cout << "The database has " << count_all << " records" << endl;
+
+	SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+	cout << "The database has " << count_students << " student records" << endl;
+
+	for (int i = 0; i < count_students; i++) {
+		cout << students[i].ID_Student << endl;
+		cout << students[i].name << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE);
+		cout << "--------------" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	}
+
+	SetConsoleTextAttribute(h, 14);
+
+	cout << "The database has " << count_teachers << " teacher records" << endl;
+
+	SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	for (int i = 0; i < count_teachers; i++) {
+		cout << teachers[i].ID_teacher << endl;
+		cout << teachers[i].name << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE);
+		cout << "--------------" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	}
+
+	SetConsoleTextAttribute(h, 14);
+
+	cout << "The database has " << count_groups << " group records" << endl;
+
+	SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	for (int i = 0; i < count_groups; i++) {
+		cout << groups[i].ID_Group << endl;
+		cout << groups[i].name << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE);
+		cout << "--------------" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	}
+
+	SetConsoleTextAttribute(h, 14);
+
+	cout << "The database has " << count_disciplines << " discipline records" << endl;
+
+	SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	for (int i = 0; i < count_disciplines; i++) {
+		cout << disciplines[i].ID_Discipline << endl;
+		cout << disciplines[i].name << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE);
+		cout << "--------------" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	}
+
+	SetConsoleTextAttribute(h, 14);
+
+	cout << "The database has " << count_works << " work records" << endl;
+
+	SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	for (int i = 0; i < count_works; i++) {
+		cout << works[i].ID_Work << endl;
+		for (int u = 0; u < count_students; u++) {
+			if (works[i].ID_Student == students[u].ID_Student) {
+				cout << "Work owner: " << students[u].name << endl;
+			}
+		}
+
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE);
+		cout << "--------------" << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	}
+
+
+
+	wait = _getch();
+
 }
 
 void menu_errors() {
