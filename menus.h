@@ -265,7 +265,7 @@ void menu_disciplines() {
 		if (count_disciplines == 0) {
 			cout << "There are not any disciplines in this base, add them!" << endl;
 			cout << "Press any key to back main menu" << endl;
-			wait = getch();
+			wait = _getch();
 			return;
 		}
 		cout << "Enter group ID that u want delete" << endl;

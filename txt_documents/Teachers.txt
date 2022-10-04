@@ -1,1 +1,53 @@
-0
+13
+4001
+Evgeniy Ivanov
+1001
+dosent
+4002
+Maksim Samoilenk
+1001
+assistent
+4003
+Zhereb Konstiantin
+1001
+assistent
+4004
+Ulia Grishko
+1001
+assistent
+4005
+Oleg Sypryn
+1001
+assistent
+4006
+Oleksandr Derevianchenko
+1002
+dosent
+4007
+Oleksandr Shatirko
+1003
+dosent
+4008
+Husainow Denis
+1003
+proffesor
+4009
+Ivan Harchenko
+1003
+proffesor
+4011
+Rinvay Harly
+1003
+assistent
+4012
+Bob Gril
+1003
+proffesor
+4013
+Filer Slain
+1003
+asspirant
+4014
+Grigoriy Suhomlinskiy
+1003
+asspirant

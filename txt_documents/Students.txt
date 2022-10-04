@@ -1,2 +1,151 @@
-0
+24
+3001
+Yevchyk Oleksii
+4101
+Full
+14
+2001
+3005
+Zinchenco Ivan
+4275
+Full
+19
+2001
+3006
+Dina Shostak
+4277
+Full
+3
+2002
+3007
+Dima Koval
+4287
+Full
+12
+2003
+3008
+Ivan Goltvenko
+4276
+Half
+17
+2003
+3009
+Vitaliy Kalina
+4264
+Full
+13
+2004
+3010
+Yana Silvestrova
+4257
+Full
+22
+2001
+3011
+Ivan Zigzag
+4219
+Full
+21
+2004
+3012
+Roman Goncharenko
+4222
+Full
+2
+2002
+3013
+Danylo Himik
+4231
+Full
+5
+2001
+3014
+Grisha Dilov
+4231
+Full
+27
+2002
+3015
+Ivan Filatov
+4256
+Full
+26
+2005
+3016
+Ilia Kovalev
+4211
+Half
+33
+2008
+3017
+Julian Gus
+4231
+Half
+32
+2007
+3017
+Jonatan Swift
+4236
+Full
+31
+2009
+3018
+Yin Grion
+4223
+Half
+35
+2006
+3019
+Han Hu
+4236
+Half
+29
+2010
+3020
+Ura Torin
+4233
+Half
+35
+2006
+3021
+Danya Derevianko
+4254
+Half
+26
+2005
+3023
+Yin Hu
+4235
+Full
+23
+2007
+3024
+Tasia Himich
+4215
+Half
+13
+2011
+3026
+Roman Frolov
+4201
+Half
+4
+2005
+3027
+Ura Grodish
+4213
+Half
+11
+2003
+3028
+Rian Jul1
+4265
+Full
+15
+2014
+-858993460
 
+-858993460
+
+-858993460
+-858993460
