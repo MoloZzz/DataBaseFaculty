@@ -1159,8 +1159,26 @@ void menu_teachers() {
 		SetConsoleTextAttribute(h, FOREGROUND_BLUE);
 		cout << "There are " << count_teachers << " teachers" <<endl;
 		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		discipline disciplindes[300];
+		ifstream IFfile_disciplindes;
+		IFfile_disciplindes.open(file_way_disciplines);
+		int count_disciplines = 0;
+		getline(IFfile_disciplindes, s);
+		count_disciplines = atoi(s.c_str());
+		get_file_disciplines(disciplindes, count_disciplines);
+
 		for (int i = 0; i < count_teachers; i++) {
-			teachers[i].print();
+			std::cout << "Teacher ID: " << teachers[i].ID_teacher << std::endl;
+			std::cout << "Name: " << teachers[i].name << std::endl;
+
+			for (int u = 0; u < count_disciplines;u++) {
+				if (teachers[i].ID_discipline == disciplindes[u].ID_Discipline) {
+					std::cout << "Discipline name: " << disciplindes[u].name << std::endl;
+				}
+			}
+			
+			std::cout << "Graduation: " << teachers[i].graduation << std::endl;
+			std::cout << std::endl;
 		}
 		wait = _getch();
 		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
@@ -1244,7 +1262,7 @@ void menu_teachers() {
 				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 			}
 		}
-
+/*
 		bool check_disc_id = false;
 		SetConsoleTextAttribute(h, FOREGROUND_BLUE);
 		cout << "Enter discipline Id(1001-1999): " << endl;
@@ -1265,6 +1283,43 @@ void menu_teachers() {
 			}
 
 		}
+*/
+
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE);
+		cout << "Which discipline teach this teacher? Choose number(1,2,3...) " << endl;
+		SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		
+		discipline disciplindes[300];
+		ifstream IFfile_disciplindes;
+		IFfile_disciplindes.open(file_way_disciplines);
+		int count_disciplines = 0;
+		getline(IFfile_disciplindes, s);
+		count_disciplines = atoi(s.c_str());
+		if (count_disciplines == 0) {
+			cout << "There are not disciplines in this base, add discipline then add teacher." << endl;
+			cout << "U will back main menu in 3 seconds" << endl;
+			Sleep(3000);
+			return;
+		}
+		get_file_disciplines(disciplindes, count_disciplines);
+		for (int i = 0; i < count_disciplines; i++) {
+			cout << i + 1 << ") ";
+			cout << disciplindes[i].name << endl;
+		}
+		string enter_choosing_discipline = "void";
+	choose_discipline1:
+		cin >> enter_choosing_discipline;
+
+		if (atoi(enter_choosing_discipline.c_str()) > count_disciplines + 1 || atoi(enter_choosing_discipline.c_str()) < 1) {
+			cout << "Wrong choose,enter number from 1 to " << count_disciplines + 1;
+			goto choose_discipline1;
+		}
+		else {
+			ID_discipline = disciplindes[atoi(enter_choosing_discipline.c_str())-1].ID_Discipline;
+		}
+
+
+
 		bool check_graduation = false;
 		cout << "Choose graduation: " << endl;
 		cout << "1) dosent" << endl;
@@ -1336,6 +1391,7 @@ void menu_teachers() {
 			}
 		}
 	}
+
 	wait = _getch();
 	menu_teachers();
 }
