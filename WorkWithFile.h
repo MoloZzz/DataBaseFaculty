@@ -46,7 +46,7 @@ void menu() {
         std::cout << "Data Base Faculty";
         SetConsoleTextAttribute(h, 5);
         d(20, 20);
-        cout << "Version 1.8";
+        cout << "Version 1.8.1";
         d(85, 20);
         std::cout << "GitHub - MoloZzz";
         d(48, 14);
