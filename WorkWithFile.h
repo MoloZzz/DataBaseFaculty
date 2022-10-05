@@ -59,7 +59,7 @@ void menu() {
     SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
     setlocale(0, "ukr");
     ConsoleCursorVisible(false, 100);
-    string T[] = {"Actions with students","Actions with disciplines","Actions with teachers","Actions with groups","Actions with works","Print all IDs","Files and errors menu","Exit"};
+    string T[] = {"Actions with students","Actions with disciplines","Actions with teachers","Actions with groups","Actions with works","Print IDs","Files and errors menu","Exit"};
 
     char aT = 0;
     char c;

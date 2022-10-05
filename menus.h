@@ -14,7 +14,7 @@ void d(short x, short y)
 	SetConsoleCursorPosition(h, { x,y });
 }
 
-	string file_way = "c:\\Users\\Yura\\source\\repos\\DataBaseFaculty\\txt_documents\\";
+	string file_way = "c:\\Users\\medoc\\source\\repos\\DataBaseFaculty\\txt_documents\\";
 	string file_way_students = file_way + "Students.txt";
 	string file_way_teachers = file_way + "Teachers.txt";
 	string file_way_groups = file_way + "Groups.txt";
@@ -171,7 +171,7 @@ bool check_numbers(string s) {
 int get_count(string file_way) {
 	string s;
 	ifstream IFfile;
-	IFfile.open(file_way_works);
+	IFfile.open(file_way);
 	getline(IFfile, s);
 	return atoi(s.c_str());
 }
@@ -189,6 +189,112 @@ void enter_int(int& enter) {
 		cout << "U entered wrong symbols,try again" << endl;
 		goto check_point;
 	}
+}
+
+void search_id_menu() {
+	system("cls");
+	SetConsoleTextAttribute(h, FOREGROUND_BLUE);
+	
+	int wait = 0;
+	bool checker = false;
+
+	work works[300];
+	student students[300];
+	discipline disciplines[300];
+	teacher teachers[300];
+	group groups[300];
+
+	int count_works = get_count(file_way_works);
+	int count_students = get_count(file_way_students);
+	int count_disciplines = get_count(file_way_disciplines);
+	int count_teachers = get_count(file_way_teachers);
+	int count_groups = get_count(file_way_groups);
+
+
+
+	get_file_works(works, count_works);
+	get_file_students(students, count_students);
+	get_file_disciplines(disciplines, count_disciplines);
+	get_file_teachers(teachers, count_teachers);
+	get_file_groups(groups, count_groups);
+
+	cout << "Enter id that u want find" << endl;
+	int id;
+
+	enter_int(id);
+
+
+	if (id < 1000 || id > 6000) {
+		cout << "wrong id, id can be from 1001-5999" << endl;
+		cout << "press BACKSPACE to back main menu or other key to try again" << endl;
+		wait = _getch();
+		if (wait == 8) {
+			return;
+		}
+		cout << "enter ID:" << endl;
+
+	}
+
+	if (id > 1000 && id < 2000) {
+		for (int i = 0; i < count_disciplines; i++) {
+			if (id == disciplines[i].ID_Discipline) {
+				disciplines[i].print();
+				checker = true;
+			}
+		}
+	}
+	
+	if (id > 2000 && id < 3000) {
+		for (int i = 0; i < count_groups; i++) {
+			if (id == groups[i].ID_Group) {
+				groups[i].print();
+				cout << endl;
+				checker = true;
+			}
+		}
+	}
+
+	if (id > 3000 && id < 4000) {
+		for (int i = 0; i < count_students; i++) {
+			if (id == students[i].ID_Student) {
+				students[i].print();
+				checker = true;
+			}
+
+		}
+	}
+
+	if (id > 4000 && id < 5000) {
+		for (int i = 0; i < count_teachers; i++) {
+			if (id == teachers[i].ID_teacher) {
+				std::cout << "Teacher ID: " << teachers[i].ID_teacher << std::endl;
+				std::cout << "Name: " << teachers[i].name << std::endl;
+
+				for (int u = 0; u < count_disciplines; u++) {
+					if (teachers[i].ID_discipline == disciplines[u].ID_Discipline) {
+						std::cout << "Discipline: " << disciplines[u].name << std::endl;
+					}
+				}
+
+				std::cout << "Graduation: " << teachers[i].graduation << std::endl;
+				std::cout << std::endl;
+				checker = true;
+			}
+		}
+	}
+
+	if (id > 5000 && id < 6000) {
+		for (int i = 0; i < count_works; i++) {
+			if (id == works[i].ID_Work) {
+				works[i].print();
+				checker = true;
+			}
+		}
+	}
+	if (!checker) {
+		cout << "Sorry, There are not this ID in base" << endl;
+	}
+	wait = _getch();
 }
 
 void menu_disciplines() {
@@ -1683,7 +1789,7 @@ void menu_teachers() {
 
 			for (int u = 0; u < count_disciplines;u++) {
 				if (teachers[i].ID_discipline == disciplindes[u].ID_Discipline) {
-					std::cout << "Discipline name: " << disciplindes[u].name << std::endl;
+					std::cout << "Discipline: " << disciplindes[u].name << std::endl;
 				}
 			}
 			
@@ -2049,8 +2155,26 @@ void menu_works() {
 
 void print_all_id() {
 	system("cls");
+	cout << "Enter 1 to print all IDs" << endl;
+	cout << "Enter 2 to find by ID" << endl;
+	cout << "Enter 0 to return" << endl;
+	int menu_enter_ids = -1;
+	enter_int(menu_enter_ids);
+	if (menu_enter_ids == 0) {
+		return;
+	}
+	if (menu_enter_ids == 2) {
+		search_id_menu();
+		return;
+	}
+	
+	if (menu_enter_ids > 2 && menu_enter_ids < 0) {
+		cout << "Wrong enter, enter 0,1 or 2" << endl;
+	}
+
 	SetConsoleTextAttribute(h, FOREGROUND_BLUE);
 	int wait = 0;
+	
 
 	work works[300];
 	student students[300];
