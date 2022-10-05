@@ -176,6 +176,21 @@ int get_count(string file_way) {
 	return atoi(s.c_str());
 }
 
+void enter_int(int& enter) {
+	string std = "void";
+	check_point:
+	cin >> std;
+
+	if (atoi(std.c_str()) != NULL) {
+		enter = atoi(std.c_str());
+		return;
+	}
+	else {
+		cout << "U entered wrong symbols,try again" << endl;
+		goto check_point;
+	}
+}
+
 void menu_disciplines() {
 
 	system("cls");
@@ -183,6 +198,7 @@ void menu_disciplines() {
 	cout << "(1) Print" << endl;
 	cout << "(2) Add" << endl;
 	cout << "(3) Delete" << endl;
+	cout << "(4) Edit" << endl;
 	cout << "(0) Back" << endl;
 
 	ifstream IFfile;
@@ -408,6 +424,170 @@ void menu_disciplines() {
 				cout << teachers[i].ID_discipline << endl;
 				cout << teachers[i].graduation << endl;
 			}
+		}
+
+	}
+
+	if (a == 4) {
+
+		if (count_disciplines <= 0) {
+			cout << "There are not disciplines in this base,nothing to edit" << endl;
+			cout << "Press any key to back main menu" << endl;
+			wait = _getch();
+			return;
+		}
+
+		cout << "\tEnter number:" << endl;
+		cout << "1) Edit by ID" << endl;
+		cout << "2) Edit by number list" << endl;
+		cout << "0) Back main menu" << endl;
+		string enter_a_a4 = "void";
+
+		cin >> enter_a_a4;
+		int a_a4 = atoi(enter_a_a4.c_str());
+
+		if (a_a4 == 0) {
+			return;
+		}
+
+		if (a_a4 == 1) {
+			a4_point2:
+			system("cls");
+			cout << "Enter ID,variants:" << endl;
+				for(int i = 0; i < count_disciplines; i++) {
+					cout << i + 1 << ") " << disciplines[i].ID_Discipline << endl;
+				}
+				int edit_id_a4 = 0;
+				int id_a4 = 0;
+				enter_int(edit_id_a4);
+				for (int j = 0; j < count_disciplines; j++) {
+					if (edit_id_a4 == disciplines[j].ID_Discipline) {
+						id_a4 = edit_id_a4;
+					}
+
+				}
+
+				if (id_a4 == 0) {
+					cout << "U entered wrong ID,press BACKSPACE to back main menu or any key to try again" << endl;
+					wait = _getch();
+					if (wait == 8) {
+						return;
+					}
+
+					goto a4_point2;
+				}
+
+				int index_to_edit = -1;
+
+				for (int i = 0; i < count_disciplines; i++) {
+					if (id_a4 == disciplines[i].ID_Discipline) {
+						index_to_edit = i;
+					}
+				}
+				cout << "Choose what u want edit:" << endl;
+				cout << "1) name" << endl;
+				cout << "Disciplines have only one atribute" << endl;
+				cout << "Enter new name of this discipline:" << endl;
+				disciplines[index_to_edit].print();
+
+				string disc_name1 = "void";
+				bool check_disc1 = false;
+			add_disc12:
+				while (!check_disc1) {
+					getline(cin, disc_name1);
+					if (!check_numbers(disc_name1) && disc_name1.size() > 1) {
+						check_disc1 = true;
+					}
+					else {
+						cout << "Name cant contain numbers, try again(more than 2 symbols)" << endl;
+						goto add_disc12;
+					}
+				}
+				disciplines[index_to_edit].name = disc_name1;
+
+				ofstream offile_disc_edit;
+				offile_disc_edit.open(file_way_disciplines);
+				offile_disc_edit << count_disciplines << endl;
+				for (int i = 0; i < count_disciplines; i++) {
+					offile_disc_edit << disciplines[i].ID_Discipline << endl;
+					offile_disc_edit << disciplines[i].name << endl;
+
+				}
+
+				cout << "Succsefully edited" << endl;
+				cout << "New name of discipline with ID: " << disciplines[index_to_edit].ID_Discipline << " - " << disciplines[index_to_edit].name << endl;
+				cout << "Press any key to back main menu" << endl;
+				wait = _getch();
+				return;
+
+
+		}
+
+
+		if (a_a4 == 2) {
+		a5_point2:
+			system("cls");
+			cout << "Enter list number,variants:" << endl;
+			for (int i = 0; i < count_disciplines; i++) {
+				cout << i + 1 << ") " << disciplines[i].ID_Discipline << endl;
+			}
+			int edit_id_a4 = 0;
+			int index_to_edit = -1;
+
+			enter_int(edit_id_a4);
+
+			if (edit_id_a4 < count_disciplines + 1 || edit_id_a4 > 1) {
+				index_to_edit = edit_id_a4 - 1;
+			}
+
+			if (index_to_edit == -1) {
+				cout << "U entered wrong list number,press BACKSPACE to back main menu or any key to try again" << endl;
+				wait = _getch();
+				if (wait == 8) {
+					return;
+				}
+
+				goto a5_point2;
+			}
+
+			
+			cout << "Choose what u want edit:" << endl;
+			cout << "1) name" << endl << endl;
+			cout << "Disciplines have only one atribute" << endl << endl;
+			cout << "Enter new name of this discipline:" << endl << endl;
+
+			disciplines[index_to_edit].print();
+
+			string disc_name1 = "void";
+			bool check_disc1 = false;
+
+		add_disc13:
+			while (!check_disc1) {
+				getline(cin, disc_name1);
+				if (!check_numbers(disc_name1) && disc_name1.size() > 1) {
+					check_disc1 = true;
+				}
+				else {
+					cout << "Name cant contain numbers, try again(more than 2 symbols)" << endl;
+					goto add_disc13;
+				}
+			}
+			disciplines[index_to_edit].name = disc_name1;
+
+			ofstream offile_disc_edit;
+			offile_disc_edit.open(file_way_disciplines);
+			offile_disc_edit << count_disciplines << endl;
+			for (int i = 0; i < count_disciplines; i++) {
+				offile_disc_edit << disciplines[i].ID_Discipline << endl;
+				offile_disc_edit << disciplines[i].name << endl;
+
+			}
+
+			cout << "Succsefully edited" << endl;
+			cout << "New name of discipline with ID: " << disciplines[index_to_edit].ID_Discipline << " - " << disciplines[index_to_edit].name << endl;
+			cout << "Press any key to back main menu" << endl;
+			wait = _getch();
+			return;
 		}
 
 	}
@@ -677,6 +857,7 @@ void menu_students() {
 	cout << "(3) Print by index(list number)" << endl;
 	cout << "(4) Print by ID" << endl;
 	cout << "(5) Delete" << endl;
+	cout << "(6) Edit" << endl;
 	cout << "(0) Back" << endl;
 
 	int wait = 0;
@@ -713,8 +894,8 @@ void menu_students() {
 
 
 	if (a == 1) {
-		SetConsoleTextAttribute(h, FOREGROUND_BLUE );
-		cout << "This list has entries: " << count_students<< endl;
+		SetConsoleTextAttribute(h, FOREGROUND_BLUE);
+		cout << "This list has entries: " << count_students << endl;
 		SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		for (int i = 0; i < count_students; i++) {
 			newStudent[i].print();
@@ -764,11 +945,12 @@ void menu_students() {
 		else {
 			student_ID = newStudent[count_students - 1].ID_Student;
 		}
+
 		cout << "Enter student name(ONLY NAME,without surname): " << endl;
 		bool check1 = false;
 		while (!check1) {
 			cin >> student_name;
-			if (( student_name.size() < 2 || student_name.size() > 10)) {
+			if ((student_name.size() < 2 || student_name.size() > 10)) {
 				SetConsoleTextAttribute(h, FOREGROUND_RED);
 				cout << "Incorrect name, try again" << endl;
 				SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
@@ -836,7 +1018,7 @@ void menu_students() {
 					studing_type = "Half";
 
 				check4 = true;
-				
+
 			}
 			else {
 				SetConsoleTextAttribute(h, FOREGROUND_RED);
@@ -868,11 +1050,11 @@ void menu_students() {
 						SetConsoleTextAttribute(h, FOREGROUND_GREEN);
 					}
 				}
-				if(!check_place_raiting)
+				if (!check_place_raiting)
 					check_place_raiting1 = true;
 			}
 		}
-	
+
 
 		cout << "Enter group ID(2001-2099) " << endl;
 		bool check6 = false;
@@ -922,7 +1104,7 @@ void menu_students() {
 
 		}
 		else {
-			SetConsoleTextAttribute(h,3);
+			SetConsoleTextAttribute(h, 3);
 			cout << "index more then all students count" << endl;
 			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		}
@@ -976,14 +1158,14 @@ void menu_students() {
 		cout << "0) Back main menu " << endl;
 		int menu_points_a5 = 0;
 		string check_int = "void";
-		point1:
+	point1:
 		cin >> check_int;
-		if (atoi(check_int.c_str()) == NULL && atoi(check_int.c_str()) < 0  && atoi(check_int.c_str()) > 2) {
+		if (atoi(check_int.c_str()) == NULL && atoi(check_int.c_str()) < 0 && atoi(check_int.c_str()) > 2) {
 			cout << "Wrong enter,try again" << endl;
 			goto point1;
 		}
 		menu_points_a5 = atoi(check_int.c_str());
-		
+
 		if (menu_points_a5 == 0) {
 			return;
 		}
@@ -1000,7 +1182,7 @@ void menu_students() {
 			bool check_rem_id = false;
 			int index_to_rem = -1;
 
-			point2:
+		point2:
 			cin >> rem_stud_id;
 			for (int i = 0; i < count_students; i++) {
 				if (newStudent[i].ID_Student == rem_stud_id) {
@@ -1022,10 +1204,10 @@ void menu_students() {
 			system("cls");
 			SetConsoleTextAttribute(h, 3);
 			cout << "Are u sure? Really want remuve this student?" << endl;
-			SetConsoleTextAttribute(h, FOREGROUND_BLUE|FOREGROUND_INTENSITY);
+			SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 			newStudent[index_to_rem].print();
 			SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
-			point3:
+		point3:
 			cout << endl << "WARNING! if u remuve record u will never get it back!!!" << endl;
 			cout << "Enter YES to continue,or NO to cancel" << endl;
 			SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
@@ -1042,7 +1224,7 @@ void menu_students() {
 					else {
 						enter_yesno = "yes";
 					}
-					
+
 					check_yesno = true;
 
 				}
@@ -1157,7 +1339,7 @@ void menu_students() {
 			cout << "Succsefull deleted " << endl;
 			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 			Sleep(2500);
-			
+
 		}
 
 
@@ -1165,7 +1347,280 @@ void menu_students() {
 
 	}
 
+	if (a == 6) {
+		if (count_students <= 0) {
+			cout << "There are not students in this base,nothing to edit" << endl;
+			cout << "Press any key to back main menu" << endl;
+			wait = _getch();
+			return;
+		}
 
+		cout << "\tEnter number:" << endl;
+		cout << "1) Edit by ID" << endl;
+		cout << "2) Edit by number list" << endl;
+		cout << "0) Back main menu" << endl;
+		string enter_a_a5 = "void";
+
+		cin >> enter_a_a5;
+		int a_a5 = atoi(enter_a_a5.c_str());
+
+		if (a_a5 == 0) {
+			return;
+		}
+
+		if (a_a5 == 1) {
+		a4_point22:
+			system("cls");
+			cout << "Enter ID,variants:" << endl;
+			for (int i = 0; i < count_students; i++) {
+				cout << i + 1 << ") " << newStudent[i].ID_Student << endl;
+				cout << newStudent[i].name << endl;
+			}
+
+			int edit_id_a4 = 0;
+			int id_a4 = 0;
+
+			enter_int(edit_id_a4);
+			for (int j = 0; j < count_students; j++) {
+				if (edit_id_a4 == newStudent[j].ID_Student) {
+					id_a4 = edit_id_a4;
+				}
+
+			}
+
+			if (id_a4 == 0) {
+				cout << "U entered wrong ID,press BACKSPACE to back main menu or any key to try again" << endl;
+				wait = _getch();
+				if (wait == 8) {
+					return;
+				}
+
+				goto a4_point22;
+			}
+
+			int index_to_edit = -1;
+
+			for (int i = 0; i < count_students; i++) {
+				if (id_a4 == newStudent[i].ID_Student) {
+					index_to_edit = i;
+				}
+			}
+
+
+			cout << "Choose what u want edit:" << endl;
+			cout << "1) Name" << endl;
+			cout << "2) Contract_number" << endl;
+			cout << "3) Studing type" << endl;
+			cout << "4) Place raiting" << endl;
+			cout << "5) Group" << endl;
+			cout << endl << "0) back" << endl;
+
+			int menu_students_edit = -1;
+		newPointWrongEnter:
+			enter_int(menu_students_edit);
+
+			if (menu_students_edit > 5 || menu_students_edit < 0) {
+				goto newPointWrongEnter;
+			}
+
+			if (menu_students_edit == 0) {
+				return;
+			}
+
+			cout << "Are u sure?" << endl;
+			cout << "Press BACKSPACE to back menu" << endl;
+			SetConsoleTextAttribute(h, 3);
+			cout << "Or other bottom to continue" << endl;
+			SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			wait = _getch();
+			if (wait == 8) {
+				return;
+			}
+
+			int student_ID = 0;
+			string student_name = "";
+			string student_surname = "";
+			string full_stud_name = "";
+			int contract_number = 0;
+			string studing_type = "";
+			int place_raiting;
+			int ID_Group = 0;
+
+			if (menu_students_edit == 1) {
+				already_exist_name1:
+				cout << "Enter new student name(ONLY NAME,without surname): " << endl;
+				bool check1 = false;
+				while (!check1) {
+					cin >> student_name;
+					if ((student_name.size() < 2 || student_name.size() > 10)) {
+						SetConsoleTextAttribute(h, FOREGROUND_RED);
+						cout << "Incorrect name, try again" << endl;
+						SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+						student_name = "";
+					}
+					else {
+						check1 = true;
+					}
+				}
+
+				cout << "Enter student surname(ONLY SURNAME,without name): " << endl;
+				bool check2 = false;
+				while (!check2) {
+					cin >> student_surname;
+					if (student_surname.size() < 2) {
+						SetConsoleTextAttribute(h, FOREGROUND_RED);
+						cout << "Entered surname so short,try again" << endl;
+						SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+					}
+					else {
+						check2 = true;
+					}
+				}
+				full_stud_name = student_name + " " + student_surname;
+
+				for (int i = 0; i < count_students; i++) {
+					if (full_stud_name == newStudent[i].name) {
+						cout << "U entered already exist student,try again" << endl;
+						cout << "Press BACKSPACE to back main menu or other bottom to try again" << endl;
+						wait = _getch();
+						goto already_exist_name1;
+					}
+
+				}
+
+				newStudent[index_to_edit].name = full_stud_name;
+
+			}
+			if (menu_students_edit == 2) {
+				cout << "Enter new contract(4200-4999): " << endl;
+				bool check3 = false;
+				bool check_contrack_number = false;
+				string enter_contract = "void";
+				while (!check3) {
+					check_contrack_number = false;
+					cin >> enter_contract;
+					contract_number = atoi(enter_contract.c_str());
+
+					if (contract_number < 4200 || contract_number > 4999) {
+						SetConsoleTextAttribute(h, FOREGROUND_RED);
+						cout << "Wrong contract number, try again! contract number is 4200-4999" << endl;
+						SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+					}
+					else {
+						for (int i = 0; i < count_students; i++) {
+							if (newStudent[i].contract_number == contract_number)
+								check_contrack_number = true;
+						}
+						if (!check_contrack_number) {
+							check3 = true;
+						}
+						else {
+							SetConsoleTextAttribute(h, 3);
+							cout << "A student with this contract number already exists, check the data and try again." << endl;
+							SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+						}
+					}
+				}
+
+				newStudent[index_to_edit].contract_number = contract_number;
+			}
+			if (menu_students_edit == 3) {
+				cout << "Enter type of studing(Half or Full) " << endl;
+				bool check4 = false;
+				while (!check4) {
+					cin >> studing_type;
+					if (studing_type == "Full" || studing_type == "Half" || studing_type == "full" || studing_type == "half") {
+						if (studing_type == "full")
+							studing_type = "Full";
+						if (studing_type == "half")
+							studing_type = "Half";
+
+						check4 = true;
+
+					}
+					else {
+						SetConsoleTextAttribute(h, FOREGROUND_RED);
+						cout << "Wrong type of studing, there are 2 types: Full and Half,try again" << endl;
+						SetConsoleTextAttribute(h, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+					}
+				}
+				newStudent[index_to_edit].studing_type = studing_type;
+			}
+			if (menu_students_edit == 4) {
+
+				cout << "Enter place raiting(1-999)" << endl;
+
+				bool check_place_raiting1 = false;
+				bool check_place_raiting = false;
+				string enter_place_raiting = "void";
+				while (!check_place_raiting1) {
+					check_place_raiting = false;
+					cin >> enter_place_raiting;
+					place_raiting = atoi(enter_place_raiting.c_str());
+					if (place_raiting < 1 || place_raiting > 999) {
+						SetConsoleTextAttribute(h, 3);
+						cout << "Wrong place rating,try again, place can be from 1 to 999" << endl;
+						SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+					}
+					else {
+						for (int i = 0; i < count_students; i++) {
+							if (newStudent[i].place_raiting == place_raiting) {
+								SetConsoleTextAttribute(h, 3);
+								cout << "There is already a student with this place in the rating, check the data and try again." << endl;
+								check_place_raiting = true;
+								SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+							}
+						}
+						if (!check_place_raiting)
+							check_place_raiting1 = true;
+					}
+				}
+				newStudent[index_to_edit].place_raiting = place_raiting;
+			}
+			if (menu_students_edit == 5) {
+
+				cout << "Enter group ID(2001-2099) " << endl;
+				bool check6 = false;
+				string enter_group = "void";
+				while (!check6) {
+					cin >> enter_group;
+					ID_Group = atoi(enter_group.c_str());
+					if (ID_Group < 2000 || ID_Group > 2099) {
+						SetConsoleTextAttribute(h, 3);
+						cout << "Wrong group ID! Group ID is only from 2000 to 2100" << endl;
+						SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+					}
+					else {
+						check6 = true;
+					}
+				}
+				newStudent[index_to_edit].ID_Group = ID_Group;
+			}
+
+	
+			
+	
+			ofstream offile_students_edit;
+			offile_students_edit.open(file_way_students);
+
+			offile_students_edit << count_students << endl;
+			for (int i = 0; i < count_students; i++) {
+				offile_students_edit << newStudent[i].ID_Student << endl;
+				offile_students_edit << newStudent[i].name << endl;
+				offile_students_edit << newStudent[i].contract_number << endl;
+				offile_students_edit << newStudent[i].studing_type << endl;
+				offile_students_edit << newStudent[i].place_raiting << endl;
+				offile_students_edit << newStudent[i].ID_Group << endl;
+			}
+
+			cout << "Succsefully edited" << endl;
+			cout << "Press any key to back main menu" << endl;
+			wait = _getch();
+			return;
+
+
+		}
+	}
 
 	menu_students();
 }
